@@ -1,3 +1,7 @@
+## Project Presentation
+You can access the weekly progress presentation [here](./2.Hafta3.Grup.pdf).
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
