@@ -63,7 +63,7 @@ function CreateProjectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-zinc-900 dark:text-white">
+          <DialogTitle className="text-lg font-semibold text-[var(--foreground)]">
             {t("addProject")}
           </DialogTitle>
         </DialogHeader>
@@ -71,7 +71,7 @@ function CreateProjectDialog({
           <div className="grid gap-2">
             <Label
               htmlFor="projectName"
-              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+              className="text-sm font-medium text-[var(--foreground)]"
             >
               {t("projectName")}
             </Label>
@@ -79,14 +79,14 @@ function CreateProjectDialog({
               id="projectName"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="text-sm text-zinc-900 dark:text-white"
+              className="text-sm text-[var(--foreground)]"
               placeholder={t("projectName")}
             />
           </div>
           <div className="grid gap-2">
             <Label
               htmlFor="projectDescription"
-              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+              className="text-sm font-medium text-[var(--foreground)]"
             >
               {t("projectDescription")}
             </Label>
@@ -94,7 +94,7 @@ function CreateProjectDialog({
               id="projectDescription"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="text-sm text-zinc-900 dark:text-white"
+              className="text-sm text-[var(--foreground)]"
               placeholder={t("projectDescription")}
             />
           </div>
@@ -193,7 +193,7 @@ export function ProjectsScreen() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">{t("projects")}</h2>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm text-[var(--muted-foreground)]">
             {t("projectsDescription")}
           </p>
         </div>
@@ -207,9 +207,9 @@ export function ProjectsScreen() {
         {projects.map((project) => (
           <Card
             key={project.id}
-            className={`cursor-pointer transition hover:border-zinc-400 dark:hover:border-gray-500 ${
+            className={`cursor-pointer transition hover:border-[var(--focus)] ${
               selectedProject?.id === project.id
-                ? "border-zinc-900 dark:border-white"
+                ? "border-[var(--primary)]"
                 : ""
             }`}
             onClick={() => setSelectedProjectId(project.id)}
@@ -217,7 +217,7 @@ export function ProjectsScreen() {
             <CardHeader className="flex flex-row items-start justify-between gap-2">
               <div className="space-y-1">
                 <CardTitle className="truncate">{project.name}</CardTitle>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2">
+                <p className="line-clamp-2 text-xs text-[var(--muted-foreground)]">
                   {project.description}
                 </p>
               </div>
@@ -232,10 +232,10 @@ export function ProjectsScreen() {
                   notifySuccess(t("toastProjectDeleted"), project.name);
                 }}
               >
-                <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
+                <Trash2 className="h-4 w-4 text-[var(--danger)]" />
               </Button>
             </CardHeader>
-            <CardContent className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+            <CardContent className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
               <span>
                 {t("totalGroups")}: {project.groups.length}
               </span>
@@ -302,7 +302,7 @@ export function ProjectsScreen() {
                         <button
                           type="button"
                           onClick={() => onRemoveFromGroup(currentGroup.groupName, emp.id)}
-                          className="ml-1 text-xs text-red-600 hover:text-red-700 dark:text-red-400"
+                          className="ml-1 text-xs text-[var(--danger)] hover:opacity-90"
                         >
                           ×
                         </button>
@@ -310,7 +310,7 @@ export function ProjectsScreen() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--muted-foreground)]">
                     {t("noEmployees")}
                   </p>
                 )}

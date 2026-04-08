@@ -25,7 +25,7 @@ export function DashboardTopNav() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:supports-[backdrop-filter]:bg-gray-800/80">
+    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
       <div className="flex h-14 min-w-0 items-center gap-2 px-4 lg:px-6">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -44,16 +44,16 @@ export function DashboardTopNav() {
         </Sheet>
 
         <div className="min-w-0 flex-1">
-          <h1 className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          <h1 className="truncate text-sm font-semibold text-[var(--foreground)]">
             {title}
           </h1>
-          <p className="hidden truncate text-xs text-zinc-500 dark:text-zinc-400 sm:block">
+          <p className="hidden truncate text-xs text-[var(--muted-foreground)] sm:block">
             {t("brandSubtitle")}
           </p>
         </div>
 
-        <div className="hidden min-w-0 flex-1 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2.5 dark:border-zinc-800 dark:bg-zinc-950 lg:flex lg:max-w-[520px]">
-          <Search className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
+        <div className="hidden min-w-0 flex-1 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-2.5 lg:flex lg:max-w-[520px]">
+          <Search className="h-4 w-4 text-[var(--muted-foreground)]" />
           <Input
             placeholder={t("searchEmployees")}
             className="h-9 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -61,7 +61,7 @@ export function DashboardTopNav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 rounded-md border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-950 sm:flex">
+          <div className="hidden items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--surface)] p-1 sm:flex">
             <Button
               type="button"
               variant={locale === "en" ? "secondary" : "ghost"}

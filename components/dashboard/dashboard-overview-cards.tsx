@@ -22,7 +22,7 @@ function StatCard({
     <Card>
       <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0">
         <CardTitle className="min-w-0 truncate">{title}</CardTitle>
-        <Icon className="h-4 w-4 shrink-0 text-zinc-500 dark:text-zinc-400" />
+        <Icon className="h-4 w-4 shrink-0 text-[var(--muted-foreground)]" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-semibold tabular-nums">{value}</div>

@@ -33,20 +33,20 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "flex h-full shrink-0 flex-col border-r border-zinc-200 bg-white dark:border-gray-700 dark:bg-gray-800",
+        "flex h-full shrink-0 flex-col border-r border-[var(--border)] bg-gradient-to-b from-[var(--sidebar-start)] to-[var(--sidebar-end)] text-white",
         collapsed ? "w-[72px]" : "w-64",
         className,
       )}
     >
-      <div className="flex h-14 items-center gap-2 border-b border-zinc-200 px-4 dark:border-zinc-800">
-        <div className="h-8 w-8 rounded-md bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900 grid place-items-center text-sm font-semibold">
+      <div className="flex h-14 items-center gap-2 border-b border-white/15 px-4">
+        <div className="grid h-8 w-8 place-items-center rounded-md bg-white/15 text-sm font-semibold text-white">
           EM
         </div>
         <div className={cn("leading-tight", collapsed && "hidden")}>
-          <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+          <div className="text-sm font-semibold text-white">
             {t("brandTitle")}
           </div>
-          <div className="text-xs text-zinc-500 dark:text-zinc-400">
+          <div className="text-xs text-slate-200/80">
             {t("brandSubtitle")}
           </div>
         </div>

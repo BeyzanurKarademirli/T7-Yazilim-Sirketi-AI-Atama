@@ -18,7 +18,7 @@ export function SettingsScreen() {
     <div className="space-y-6">
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight">{t("settings")}</h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-[var(--muted-foreground)]">
           {t("settingsDescription")}
         </p>
       </div>

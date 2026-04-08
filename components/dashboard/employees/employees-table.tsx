@@ -57,7 +57,7 @@ export function EmployeesTable({
   }, [departments, t]);
 
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)]">
       <Table className="min-w-[900px]">
         <TableHeader>
           <TableRow>
@@ -74,7 +74,7 @@ export function EmployeesTable({
             <TableRow>
               <TableCell
                 colSpan={6}
-                className="py-10 text-center text-zinc-500 dark:text-zinc-400"
+                className="py-10 text-center text-[var(--muted-foreground)]"
               >
                 {t("noEmployees")}
               </TableCell>
@@ -85,14 +85,14 @@ export function EmployeesTable({
                 <TableCell className="font-medium">
                   {e.name}
                 </TableCell>
-                <TableCell className="text-zinc-600 dark:text-zinc-400">
+                <TableCell className="text-[var(--muted-foreground)]">
                   {e.email}
                 </TableCell>
                 <TableCell>{departmentNameById.get(e.department) ?? "—"}</TableCell>
                 <TableCell className="text-right tabular-nums">
                   {formatCurrency(e.salary)}
                 </TableCell>
-                <TableCell className="text-zinc-600 dark:text-zinc-400">
+                <TableCell className="text-[var(--muted-foreground)]">
                   {t(roleKeyById[e.role])}
                 </TableCell>
                 <TableCell className="text-right">
@@ -111,7 +111,7 @@ export function EmployeesTable({
                       aria-label={t("deleteEmployee")}
                       onClick={() => onDelete(e)}
                     >
-                      <Trash2 className="text-red-600 dark:text-red-500" />
+                      <Trash2 className="text-[var(--danger)]" />
                     </Button>
                   </div>
                 </TableCell>

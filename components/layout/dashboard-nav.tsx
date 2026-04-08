@@ -37,9 +37,9 @@ export function DashboardNav({
             href={item.href}
             onClick={onNavigate}
             className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-zinc-50",
+              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 hover:text-white",
               isActive &&
-                "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
+                "bg-white text-[var(--primary)] shadow-sm",
             )}
           >
             <item.icon className="h-4 w-4" />

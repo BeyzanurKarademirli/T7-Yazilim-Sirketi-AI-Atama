@@ -85,7 +85,7 @@ export function DepartmentsScreen() {
     <div className="space-y-6">
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight">{t("departments")}</h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-[var(--muted-foreground)]">
           {t("departmentsDescription")}
         </p>
       </div>
@@ -112,7 +112,7 @@ export function DepartmentsScreen() {
         </CardContent>
       </Card>
 
-      <div className="rounded-lg border border-zinc-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)]">
         <Table>
           <TableHeader>
             <TableRow>
@@ -124,7 +124,7 @@ export function DepartmentsScreen() {
           <TableBody>
             {departments.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="py-10 text-center text-zinc-500 dark:text-zinc-400">
+                <TableCell colSpan={3} className="py-10 text-center text-[var(--muted-foreground)]">
                   {t("noDepartments")}
                 </TableCell>
               </TableRow>
@@ -144,7 +144,7 @@ export function DepartmentsScreen() {
                       aria-label={t("deleteDepartment")}
                       onClick={() => onDelete(d)}
                     >
-                      <Trash2 className="text-red-600 dark:text-red-500" />
+                      <Trash2 className="text-[var(--danger)]" />
                     </Button>
                   </TableCell>
                 </TableRow>
