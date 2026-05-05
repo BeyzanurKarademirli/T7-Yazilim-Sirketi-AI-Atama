@@ -12,8 +12,10 @@ import { useI18n } from "@/i18n/provider";
 import type { TranslationKey } from "@/i18n/translations";
 
 function getPageTitle(pathname: string): TranslationKey {
+  if (pathname.startsWith("/dashboard/tasks")) return "tasks";
   if (pathname.startsWith("/dashboard/employees")) return "employees";
   if (pathname.startsWith("/dashboard/departments")) return "departments";
+  if (pathname.startsWith("/dashboard/projects")) return "projects";
   if (pathname.startsWith("/dashboard/settings")) return "settings";
   return "dashboard";
 }

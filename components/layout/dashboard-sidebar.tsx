@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Building2, FolderKanban, LayoutDashboard, Settings, Users } from "lucide-react";
+import { Building2, FolderKanban, LayoutDashboard, ListTodo, Settings, Users } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { DashboardNav, type DashboardNavItem } from "@/components/layout/dashboard-nav";
@@ -11,6 +11,7 @@ import { useSettingsStore } from "@/store/settings-store";
 const itemDefs = [
   { titleKey: "dashboard", href: "/dashboard", icon: LayoutDashboard },
   { titleKey: "employees", href: "/dashboard/employees", icon: Users },
+  { titleKey: "tasks", href: "/dashboard/tasks", icon: ListTodo },
   { titleKey: "departments", href: "/dashboard/departments", icon: Building2 },
   { titleKey: "projects", href: "/dashboard/projects", icon: FolderKanban },
   { titleKey: "settings", href: "/dashboard/settings", icon: Settings },

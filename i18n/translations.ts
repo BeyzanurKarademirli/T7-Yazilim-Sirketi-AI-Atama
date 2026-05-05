@@ -2,6 +2,7 @@ export const translations = {
   en: {
     dashboard: "Dashboard",
     employees: "Employees",
+    tasks: "Tasks",
     departments: "Departments",
     projects: "Projects",
     settings: "Settings",
@@ -56,6 +57,7 @@ export const translations = {
 
     noEmployees: "No employees yet. Click “Add Employee” to create your first record.",
     employeesDescription: "Manage employee records, departments, and compensation.",
+    tasksDescription: "Assign tasks to employees and track sprint progress.",
     departmentsDescription: "Manage departments and reporting structure.",
     settingsDescription: "Configure your dashboard preferences.",
 
@@ -74,6 +76,33 @@ export const translations = {
 
     toastDepartmentAdded: "Department added",
     toastDepartmentDeleted: "Department deleted",
+
+    // Tasks
+    taskAssignment: "Task Assignment",
+    addTask: "Add Task",
+    deleteTask: "Delete Task",
+    taskTitle: "Task title",
+    taskTitlePlaceholder: "e.g. Prepare dashboard widgets",
+    taskStatus: "Status",
+    dueDate: "Due date",
+    priority: "Priority",
+    assignee: "Assignee",
+    noTasks: "No tasks yet.",
+    statusTodo: "Todo",
+    statusInProgress: "In Progress",
+    statusDone: "Done",
+    priorityLow: "Low",
+    priorityMedium: "Medium",
+    priorityHigh: "High",
+
+    // Employee profile
+    employeeProfile: "Employee Profile",
+    employeeProfileDescription: "Detailed summary and related projects of the employee.",
+    viewProfile: "View profile",
+    backToEmployees: "Back to employees",
+    noProjectsForEmployee: "No project assignment yet.",
+    seeTaskBoardHint: "Track details from the Tasks page.",
+    activeTasks: "Active tasks",
 
     // Projects
     projectsDescription: "Manage projects, groups, and employee assignments.",
@@ -154,6 +183,10 @@ export const translations = {
     toastReset: "Data reset",
     saved: "Saved",
 
+    // Analytics
+    employeesByDepartment: "Employees by Department",
+    taskStatusDistribution: "Task Status Distribution",
+
     errorUnknown: "Something went wrong.",
     errorDuplicateEmail: "This email is already used.",
     errorEmployeeNotFound: "Employee not found.",
@@ -163,6 +196,7 @@ export const translations = {
   tr: {
     dashboard: "Panel",
     employees: "Çalışanlar",
+    tasks: "Görevler",
     departments: "Departmanlar",
     projects: "Projeler",
     settings: "Ayarlar",
@@ -217,6 +251,7 @@ export const translations = {
 
     noEmployees: "Henüz çalışan yok. İlk kaydı oluşturmak için “Çalışan Ekle”ye tıklayın.",
     employeesDescription: "Çalışan kayıtlarını, departmanları ve ücretleri yönetin.",
+    tasksDescription: "Çalışanlara görev atayın ve sprint ilerlemesini takip edin.",
     departmentsDescription: "Departmanları ve raporlama yapısını yönetin.",
     settingsDescription: "Panel tercihlerinizi yapılandırın.",
 
@@ -235,6 +270,33 @@ export const translations = {
 
     toastDepartmentAdded: "Departman eklendi",
     toastDepartmentDeleted: "Departman silindi",
+
+    // Tasks
+    taskAssignment: "Görev Atama",
+    addTask: "Görev Ekle",
+    deleteTask: "Görevi Sil",
+    taskTitle: "Görev başlığı",
+    taskTitlePlaceholder: "örn. Dashboard bileşenlerini hazırla",
+    taskStatus: "Durum",
+    dueDate: "Bitiş tarihi",
+    priority: "Öncelik",
+    assignee: "Atanan kişi",
+    noTasks: "Henüz görev yok.",
+    statusTodo: "Yapılacak",
+    statusInProgress: "Devam ediyor",
+    statusDone: "Tamamlandı",
+    priorityLow: "Düşük",
+    priorityMedium: "Orta",
+    priorityHigh: "Yüksek",
+
+    // Employee profile
+    employeeProfile: "Çalışan Profili",
+    employeeProfileDescription: "Çalışanın detaylı özeti ve bağlı olduğu projeler.",
+    viewProfile: "Profili Gör",
+    backToEmployees: "Çalışanlara dön",
+    noProjectsForEmployee: "Henüz proje ataması yok.",
+    seeTaskBoardHint: "Detaylar için Görevler sayfasını kullanın.",
+    activeTasks: "Aktif görevler",
 
     // Projects
     projectsDescription: "Projeleri, grupları ve çalışan atamalarını yönetin.",
@@ -314,6 +376,10 @@ export const translations = {
     toastImported: "İçe aktarıldı",
     toastReset: "Veriler sıfırlandı",
     saved: "Kaydedildi",
+
+    // Analytics
+    employeesByDepartment: "Departmana Göre Çalışan",
+    taskStatusDistribution: "Görev Durumu Dağılımı",
 
     errorUnknown: "Bir şeyler ters gitti.",
     errorDuplicateEmail: "Bu e-posta zaten kullanılıyor.",
