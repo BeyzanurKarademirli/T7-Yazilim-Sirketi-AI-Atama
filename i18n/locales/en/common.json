@@ -1,0 +1,23 @@
+{
+  "nav.dashboard": "Dashboard",
+  "nav.employees": "Employees",
+  "nav.departments": "Departments",
+  "nav.settings": "Settings",
+
+  "brand.title": "Employee Admin",
+  "brand.subtitle": "Management Dashboard",
+
+  "topnav.subtitle": "Employee Management Dashboard",
+  "topnav.searchEmployees": "Search employees...",
+  "topnav.openMenu": "Open menu",
+  "topnav.notifications": "Notifications",
+  "topnav.newEmployee": "New Employee",
+
+  "dashboard.overview": "Overview of your organization.",
+
+  "cards.totalEmployees": "Total Employees",
+  "cards.totalSalary": "Total Salary",
+  "cards.departments": "Departments",
+  "cards.averageSalary": "Average Salary"
+}
+
