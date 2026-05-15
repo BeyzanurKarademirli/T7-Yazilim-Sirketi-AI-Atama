@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardOverviewCards } from "@/components/dashboard/dashboard-overview-cards";
+import { DashboardAnalytics } from "@/components/dashboard/dashboard-analytics";
 import { useI18n } from "@/i18n/provider";
 
 export default function DashboardPage() {
@@ -17,6 +18,7 @@ export default function DashboardPage() {
       </div>
 
       <DashboardOverviewCards />
+      <DashboardAnalytics />
     </div>
   );
 }

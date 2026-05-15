@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -57,8 +58,8 @@ export function EmployeesTable({
   }, [departments, t]);
 
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-      <Table className="min-w-[900px]">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)]">
+      <Table className="min-w-[760px]">
         <TableHeader>
           <TableRow>
             <TableHead>{t("name")}</TableHead>
@@ -66,7 +67,7 @@ export function EmployeesTable({
             <TableHead>{t("department")}</TableHead>
             <TableHead className="text-right">{t("salary")}</TableHead>
             <TableHead>{t("role")}</TableHead>
-            <TableHead className="w-[120px] text-right">{t("actions")}</TableHead>
+            <TableHead className="w-[170px] text-right">{t("actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -74,7 +75,7 @@ export function EmployeesTable({
             <TableRow>
               <TableCell
                 colSpan={6}
-                className="py-10 text-center text-zinc-500 dark:text-zinc-400"
+                className="py-10 text-center text-[var(--muted-foreground)]"
               >
                 {t("noEmployees")}
               </TableCell>
@@ -85,18 +86,28 @@ export function EmployeesTable({
                 <TableCell className="font-medium">
                   {e.name}
                 </TableCell>
-                <TableCell className="text-zinc-600 dark:text-zinc-400">
+                <TableCell className="text-[var(--muted-foreground)]">
                   {e.email}
                 </TableCell>
                 <TableCell>{departmentNameById.get(e.department) ?? "—"}</TableCell>
                 <TableCell className="text-right tabular-nums">
                   {formatCurrency(e.salary)}
                 </TableCell>
-                <TableCell className="text-zinc-600 dark:text-zinc-400">
+                <TableCell className="text-[var(--muted-foreground)]">
                   {t(roleKeyById[e.role])}
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="inline-flex items-center gap-2">
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      aria-label={t("viewProfile")}
+                    >
+                      <Link href={`/dashboard/employees/${e.id}`}>
+                        <Eye />
+                      </Link>
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -111,7 +122,7 @@ export function EmployeesTable({
                       aria-label={t("deleteEmployee")}
                       onClick={() => onDelete(e)}
                     >
-                      <Trash2 className="text-red-600 dark:text-red-500" />
+                      <Trash2 className="text-[var(--danger)]" />
                     </Button>
                   </div>
                 </TableCell>

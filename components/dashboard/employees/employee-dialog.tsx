@@ -173,7 +173,7 @@ export function EmployeeDialog({
                 onChange={(ev) =>
                   setForm((s) => ({ ...s, department: ev.target.value }))
                 }
-                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm shadow-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-50 dark:focus-visible:ring-offset-zinc-950"
+                className="h-9 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 text-sm text-[var(--foreground)] shadow-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--focus)] focus-visible:ring-offset-2"
               >
                 {departments.map((d) => (
                   <option key={d.id} value={d.id}>
@@ -205,7 +205,7 @@ export function EmployeeDialog({
                 onChange={(ev) =>
                   setForm((s) => ({ ...s, role: ev.target.value as RoleId }))
                 }
-                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm shadow-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-950 dark:focus-visible:ring-zinc-50 dark:focus-visible:ring-offset-zinc-950"
+                className="h-9 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 text-sm text-[var(--foreground)] shadow-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--focus)] focus-visible:ring-offset-2"
               >
                 {DEFAULT_ROLES.map((r) => (
                   <option key={r} value={r}>

@@ -70,7 +70,7 @@ export function EmployeesScreen() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">{t("employees")}</h2>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm text-[var(--muted-foreground)]">
             {t("employeesDescription")}
           </p>
         </div>
@@ -95,16 +95,16 @@ export function EmployeesScreen() {
         onDelete={onDelete}
       />
 
-      <div className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm dark:border-zinc-800 dark:bg-zinc-950">
-        <div className="text-zinc-600 dark:text-zinc-400">
+      <div className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm">
+        <div className="text-[var(--muted-foreground)]">
           {t("totalsEmployeesLabel")}:{" "}
-          <span className="font-medium text-zinc-900 dark:text-zinc-50">
+          <span className="font-medium text-[var(--foreground)]">
             {employees.length}
           </span>
         </div>
-        <div className="text-zinc-600 dark:text-zinc-400">
+        <div className="text-[var(--muted-foreground)]">
           {t("totalsSalaryLabel")}:{" "}
-          <span className="font-medium text-zinc-900 dark:text-zinc-50">
+          <span className="font-medium text-[var(--foreground)]">
             {formatCurrency(totalSalary)}
           </span>
         </div>
