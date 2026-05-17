@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { useI18n } from "@/i18n/provider";
 import { notifySuccess } from "@/lib/notify";
+import { useAuthStore } from "@/store/auth-store";
 import { useSettingsStore } from "@/store/settings-store";
 
 export function SecurityTab() {
@@ -15,6 +16,7 @@ export function SecurityTab() {
   const lastLoginAt = useSettingsStore((s) => s.lastLoginAt);
   const setTwoFactorEnabled = useSettingsStore((s) => s.setTwoFactorEnabled);
   const logoutAllDevices = useSettingsStore((s) => s.logoutAllDevices);
+  const logout = useAuthStore((s) => s.logout);
 
   const lastLoginText = React.useMemo(() => {
     try {
@@ -60,7 +62,8 @@ export function SecurityTab() {
               variant="destructive"
               onClick={() => {
                 logoutAllDevices();
-                notifySuccess(t("toastSaved"));
+                logout();
+                notifySuccess(t("toastLoggedOut"));
               }}
             >
               {t("logoutAll")}

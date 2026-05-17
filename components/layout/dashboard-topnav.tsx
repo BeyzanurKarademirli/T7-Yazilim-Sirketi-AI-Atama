@@ -1,11 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { useI18n } from "@/i18n/provider";
@@ -16,6 +15,7 @@ function getPageTitle(pathname: string): TranslationKey {
   if (pathname.startsWith("/dashboard/employees")) return "employees";
   if (pathname.startsWith("/dashboard/departments")) return "departments";
   if (pathname.startsWith("/dashboard/projects")) return "projects";
+  if (pathname.startsWith("/dashboard/ask-ai")) return "askAi";
   if (pathname.startsWith("/dashboard/settings")) return "settings";
   return "dashboard";
 }
@@ -54,14 +54,6 @@ export function DashboardTopNav() {
           </p>
         </div>
 
-        <div className="hidden min-w-0 flex-1 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-2.5 lg:flex lg:max-w-[520px]">
-          <Search className="h-4 w-4 text-[var(--muted-foreground)]" />
-          <Input
-            placeholder={t("searchEmployees")}
-            className="h-9 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
-          />
-        </div>
-
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--surface)] p-1 sm:flex">
             <Button
@@ -88,4 +80,3 @@ export function DashboardTopNav() {
     </header>
   );
 }
-

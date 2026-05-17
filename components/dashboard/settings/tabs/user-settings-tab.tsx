@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useI18n } from "@/i18n/provider";
 import { notifyError, notifySuccess } from "@/lib/notify";
+import { useAuthStore } from "@/store/auth-store";
 import { useSettingsStore } from "@/store/settings-store";
 
 function initials(name: string) {
@@ -19,13 +21,18 @@ function initials(name: string) {
 
 export function UserSettingsTab() {
   const { t } = useI18n();
+  const username = useSettingsStore((s) => s.username);
+  const password = useSettingsStore((s) => s.password);
   const profileName = useSettingsStore((s) => s.profileName);
   const profileEmail = useSettingsStore((s) => s.profileEmail);
   const profileImageDataUrl = useSettingsStore((s) => s.profileImageDataUrl);
   const notifyEmail = useSettingsStore((s) => s.notifyEmail);
   const notifyToast = useSettingsStore((s) => s.notifyToast);
+  const setUsername = useSettingsStore((s) => s.setUsername);
+  const setPassword = useSettingsStore((s) => s.setPassword);
   const setProfile = useSettingsStore((s) => s.setProfile);
   const setNotify = useSettingsStore((s) => s.setNotify);
+  const logout = useAuthStore((s) => s.logout);
 
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
@@ -43,10 +50,11 @@ export function UserSettingsTab() {
   }
 
   function onSaveProfile() {
-    if (!profileName.trim() || !profileEmail.trim()) {
+    if (!username.trim() || !profileName.trim() || !profileEmail.trim()) {
       notifyError(t("errorUnknown"));
       return;
     }
+    setUsername(username);
     notifySuccess(t("toastSaved"));
   }
 
@@ -55,10 +63,19 @@ export function UserSettingsTab() {
       notifyError(t("errorUnknown"));
       return;
     }
-    if (newPassword !== confirmPassword) {
-      notifyError(t("errorUnknown"));
+    if (currentPassword !== password) {
+      notifyError(t("errorWrongPassword"));
       return;
     }
+    if (newPassword !== confirmPassword) {
+      notifyError(t("errorPasswordMismatch"));
+      return;
+    }
+    if (newPassword.length < 6) {
+      notifyError(t("errorPasswordTooShort"));
+      return;
+    }
+    setPassword(newPassword);
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -82,6 +99,15 @@ export function UserSettingsTab() {
           </div>
 
           <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="username">{t("username")}</Label>
+              <Input
+                id="username"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="profileName">{t("name")}</Label>
               <Input
@@ -181,6 +207,26 @@ export function UserSettingsTab() {
               onCheckedChange={(v) => setNotify({ notifyToast: v })}
             />
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("signOut")}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-[var(--muted-foreground)]">{t("signOutDescription")}</p>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              logout();
+              notifySuccess(t("toastLoggedOut"));
+            }}
+          >
+            <LogOut className="h-4 w-4" />
+            {t("signOut")}
+          </Button>
         </CardContent>
       </Card>
     </div>
