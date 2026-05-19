@@ -1,67 +1,130 @@
+// ============================================================
+// lib/scoringEngine.ts
+// Ağırlıklı Puanlama Motoru — US-02 implementasyonu
+// Formül: Skor = (yetkinlik × 0.60) + (iş_yükü_boşluğu × 0.40)
+// ============================================================
+
 import {
+  Employee,
+  Task,
+  Candidate,
+  ScoringWeights,
+  DEFAULT_WEIGHTS,
   SCORE_THRESHOLD,
-  type Employee,
-  type ScoredCandidate,
-  type Task,
+  MAX_CANDIDATES,
 } from "../types/assignment";
 
-function clamp(value: number, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, value));
+/**
+ * Bir çalışanın belirli bir görev için yetkinlik skorunu hesaplar.
+ * Çalışanın ilgili kategorideki skill level'ı 1–10 → normalize → 0–1
+ */
+function calculateSkillScore(employee: Employee, task: Task): number {
+  const relevantSkill = employee.skills.find(
+    (s) => s.category.toLowerCase() === task.requiredCategory.toLowerCase()
+  );
+
+  if (!relevantSkill) return 0; // ilgili yetkinlik hiç tanımlanmamış
+
+  // 1–10 aralığını 0–1'e normalize et
+  return Math.min(Math.max(relevantSkill.level, 1), 10) / 10;
 }
 
-function getSkillScore(employee: Employee, task: Task): number {
-  const matched = employee.skills.find((s) => s.category === task.requiredCategory);
-  if (!matched) return 0;
-  return clamp(matched.level / 10);
+/**
+ * Bir çalışanın iş yükü boşluğunu hesaplar.
+ * Boşluk = (maksKapasite - aktifGörev) / maksKapasite
+ * Tam dolu çalışan → 0.0, hiç görevi yok → 1.0
+ */
+function calculateWorkloadScore(employee: Employee): number {
+  const { activeTaskCount, maxTaskCapacity } = employee;
+
+  if (maxTaskCapacity <= 0) return 0;
+
+  const gap = maxTaskCapacity - activeTaskCount;
+  return Math.min(Math.max(gap / maxTaskCapacity, 0), 1);
 }
 
-function getWorkloadScore(employee: Employee): number {
-  const max = employee.maxTaskCapacity > 0 ? employee.maxTaskCapacity : 5;
-  const active = Math.max(0, employee.activeTaskCount);
-  return clamp((max - active) / max);
+/**
+ * Tek bir çalışan için toplam uygunluk skorunu hesaplar.
+ * Skor = (skillScore × weights.skill) + (workloadScore × weights.workload)
+ */
+function calculateTotalScore(
+  employee: Employee,
+  task: Task,
+  weights: ScoringWeights = DEFAULT_WEIGHTS
+): { total: number; skillScore: number; workloadScore: number } {
+  const skillScore = calculateSkillScore(employee, task);
+  const workloadScore = calculateWorkloadScore(employee);
+  const total = skillScore * weights.skill + workloadScore * weights.workload;
+
+  return { total, skillScore, workloadScore };
 }
 
-function isCompleteProfile(employee: Employee): boolean {
-  return Array.isArray(employee.skills) && employee.skills.length > 0;
-}
-
-export function getIncompleteProfiles(employees: Employee[]): Employee[] {
-  return employees.filter((e) => !isCompleteProfile(e));
-}
-
+/**
+ * Ana fonksiyon: Verilen görev için en uygun MAX_CANDIDATES adayı döndürür.
+ *
+ * Kurallar (belgeden):
+ * - Yalnızca müsait (isAvailable: true) ve profili dolu çalışanlar değerlendirilir
+ * - Skor < SCORE_THRESHOLD olanlar elenir
+ * - Eşit skorlarda alfabetik sıra uygulanır (AC-US02-3)
+ * - En yüksek 3 aday döndürülür
+ */
 export function getTopCandidates(
   employees: Employee[],
   task: Task,
-  skillWeight = 0.6,
-  workloadWeight = 0.4,
-): ScoredCandidate[] {
-  if (!employees.length) return [];
-
-  return employees
-    .filter((e) => e.isAvailable && isCompleteProfile(e))
-    .map((employee) => {
-      const skillScore = getSkillScore(employee, task);
-      const workloadScore = getWorkloadScore(employee);
-      const score = clamp(skillScore * skillWeight + workloadScore * workloadWeight);
-      return { employee, score, skillScore, workloadScore };
+  weights: ScoringWeights = DEFAULT_WEIGHTS
+): Candidate[] {
+  const scored = employees
+    .filter((e) => {
+      // Müsait değilse elimi
+      if (!e.isAvailable) return false;
+      // Profil boşsa (skill tanımlı değilse) uyar, listeye alma
+      if (!e.skills || e.skills.length === 0) return false;
+      return true;
     })
-    .filter((c) => c.score >= SCORE_THRESHOLD)
-    .sort(
-      (a, b) =>
-        b.score - a.score || a.employee.name.localeCompare(b.employee.name, "tr"),
-    )
-    .slice(0, 3)
-    .map((candidate, idx) => ({
-      ...candidate,
-      rank: idx + 1,
-    }));
+    .map((employee) => {
+      const { total, skillScore, workloadScore } = calculateTotalScore(
+        employee,
+        task,
+        weights
+      );
+      return { employee, score: total, skillScore, workloadScore };
+    })
+    .filter((c) => c.score >= SCORE_THRESHOLD) // eşik filtresi
+    .sort((a, b) => {
+      // Önce skora göre azalan
+      if (b.score !== a.score) return b.score - a.score;
+      // Eşit skorlarda alfabetik (AC-US02-3)
+      return a.employee.name.localeCompare(b.employee.name, "tr");
+    })
+    .slice(0, MAX_CANDIDATES);
+
+  // rank ata
+  return scored.map((c, index) => ({
+    ...c,
+    rank: index + 1,
+  }));
 }
 
+/**
+ * Profili eksik çalışanların listesini döndürür (dashboard uyarısı için).
+ */
+export function getIncompleteProfiles(employees: Employee[]): Employee[] {
+  return employees.filter(
+    (e) => !e.skills || e.skills.length === 0
+  );
+}
+
+/**
+ * İş yükü standart sapmasını hesaplar (Dashboard uyarısı: σ > 2 → uyarı).
+ * AC-US05-2 gereği kullanılır.
+ */
 export function calculateWorkloadStdDev(employees: Employee[]): number {
-  if (employees.length <= 1) return 0;
-  const values = employees.map((e) => Math.max(0, e.activeTaskCount));
-  const mean = values.reduce((sum, v) => sum + v, 0) / values.length;
+  if (employees.length === 0) return 0;
+
+  const counts = employees.map((e) => e.activeTaskCount);
+  const mean = counts.reduce((sum, c) => sum + c, 0) / counts.length;
   const variance =
-    values.reduce((sum, v) => sum + (v - mean) ** 2, 0) / values.length;
-  return Number(Math.sqrt(variance).toFixed(4));
+    counts.reduce((sum, c) => sum + Math.pow(c - mean, 2), 0) / counts.length;
+
+  return Math.sqrt(variance);
 }
