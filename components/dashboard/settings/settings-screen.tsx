@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useI18n } from "@/i18n/provider";
+import { AlgorithmTab } from "@/components/dashboard/settings/tabs/algorithm-tab";
 import { UserSettingsTab } from "@/components/dashboard/settings/tabs/user-settings-tab";
 import { AppearanceTab } from "@/components/dashboard/settings/tabs/appearance-tab";
 import { LanguageTab } from "@/components/dashboard/settings/tabs/language-tab";
@@ -23,8 +24,14 @@ export function SettingsScreen() {
         </p>
       </div>
 
-      <Tabs defaultValue="user" className="w-full">
-        <TabsList className="w-full justify-start overflow-x-auto">
+      <Tabs defaultValue="profile" className="w-full">
+        <TabsList className="w-full justify-start overflow-x-auto border-b border-[var(--border)] bg-transparent p-0">
+          <TabsTrigger value="profile" className="rounded-none border-b-2 border-transparent data-[state=active]:border-[var(--teal)] data-[state=active]:bg-transparent">
+            {t("settingsProfile")}
+          </TabsTrigger>
+          <TabsTrigger value="algorithm" className="rounded-none border-b-2 border-transparent data-[state=active]:border-[var(--teal)] data-[state=active]:bg-transparent">
+            {t("settingsAlgorithm")}
+          </TabsTrigger>
           <TabsTrigger value="user">{t("userSettings")}</TabsTrigger>
           <TabsTrigger value="appearance">{t("appearance")}</TabsTrigger>
           <TabsTrigger value="language">{t("language")}</TabsTrigger>
@@ -33,6 +40,12 @@ export function SettingsScreen() {
           <TabsTrigger value="data">{t("dataBackup")}</TabsTrigger>
         </TabsList>
 
+        <TabsContent value="profile">
+          <UserSettingsTab />
+        </TabsContent>
+        <TabsContent value="algorithm">
+          <AlgorithmTab />
+        </TabsContent>
         <TabsContent value="user">
           <UserSettingsTab />
         </TabsContent>

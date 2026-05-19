@@ -1,0 +1,571 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0F1F3D;--navy3:#1E3561;--teal:#00C9A7;--teal2:#00A88A;--blue:#4A9EFF;--gray1:#F4F6FB;--gray2:#E8ECF4;--gray3:#B0BAD0;--white:#FFFFFF;--red:#FF4E4E;--amber:#FFB347}
+.app{display:flex;height:600px;border-radius:var(--border-radius-lg);overflow:hidden;border:1.5px solid var(--gray2);background:var(--white);font-family:var(--font-sans)}
+.sidebar{width:210px;flex-shrink:0;background:var(--navy);display:flex;flex-direction:column}
+.logo-box{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.logo-title{font-size:14px;font-weight:500;color:var(--white)}
+.logo-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:13px;cursor:pointer;color:rgba(255,255,255,0.5);transition:all 0.2s;position:relative}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,0.06)}
+.nav-item.active{color:var(--white);background:rgba(0,201,167,0.15)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--teal);border-radius:0 3px 3px 0}
+.nav-item i{font-size:17px}
+.nav-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px}
+.main{flex:1;overflow-y:auto;background:var(--gray1);display:flex;flex-direction:column}
+.topbar{padding:14px 22px;background:var(--white);border-bottom:1.5px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:500;color:var(--navy)}
+.topbar-sub{font-size:12px;color:#5A6A85;margin-top:1px}
+.page{padding:20px;flex:1}
+.page.hidden{display:none}
+.badge{font-size:11px;padding:3px 10px;border-radius:99px;font-weight:500;display:inline-flex;align-items:center;gap:4px}
+.badge-teal{background:rgba(0,201,167,0.12);color:#007A67}
+.badge-red{background:rgba(255,78,78,0.12);color:#CC0000}
+.badge-amber{background:rgba(255,179,71,0.15);color:#A06200}
+.badge-blue{background:rgba(74,158,255,0.12);color:#1666CC}
+.badge-purple{background:rgba(147,112,219,0.15);color:#5B3FA8}
+.card{background:var(--white);border:1.5px solid var(--gray2);border-radius:var(--border-radius-lg);padding:18px;margin-bottom:14px}
+.section-label{font-size:11px;font-weight:500;color:#5A6A85;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px}
+.field label{font-size:12px;color:#5A6A85;display:block;margin-bottom:4px}
+.field input,.field select{width:100%;height:34px;padding:0 10px;font-size:13px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);background:var(--white);color:var(--navy)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.btn{height:34px;padding:0 16px;font-size:13px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);cursor:pointer;background:var(--white);color:var(--navy);display:inline-flex;align-items:center;gap:6px;transition:all 0.15s;font-weight:500}
+.btn:hover{background:var(--gray1)}
+.btn-primary{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.btn-primary:hover{background:var(--navy3)}
+.btn-teal{background:var(--teal);color:var(--white);border-color:var(--teal)}
+.btn-teal:hover{background:var(--teal2)}
+.btn-accept{background:var(--teal);color:var(--white);border-color:var(--teal);height:30px;padding:0 12px;font-size:12px}
+.btn-accept:hover{background:var(--teal2)}
+.btn-reject{background:rgba(255,78,78,0.1);color:var(--red);border-color:rgba(255,78,78,0.25);height:30px;padding:0 12px;font-size:12px}
+.btn-reject:hover{background:rgba(255,78,78,0.2)}
+.btn-danger{background:rgba(255,78,78,0.1);color:var(--red);border-color:rgba(255,78,78,0.25)}
+.btn-danger:hover{background:rgba(255,78,78,0.2)}
+.btn-edit{background:rgba(74,158,255,0.1);color:#1666CC;border-color:rgba(74,158,255,0.25);height:28px;padding:0 10px;font-size:12px}
+.btn-edit:hover{background:rgba(74,158,255,0.2)}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.cand{border:1.5px solid var(--gray2);border-radius:var(--border-radius-lg);padding:14px 16px;display:flex;align-items:center;gap:14px;background:var(--white);transition:all 0.3s;animation:fadeIn 0.4s ease;margin-bottom:10px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{to{opacity:0;transform:scale(0.95)}}
+.cand:hover{border-color:var(--teal)}
+.cand.rank1{border-left:3px solid var(--teal)}
+.cand.rank2{border-left:3px solid var(--blue)}
+.cand.rank3{border-left:3px solid var(--amber)}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+.av0{background:rgba(0,201,167,0.15);color:#007A67}
+.av1{background:rgba(74,158,255,0.15);color:#1666CC}
+.av2{background:rgba(255,179,71,0.15);color:#A06200}
+.av3{background:rgba(147,112,219,0.15);color:#5B3FA8}
+.av4{background:rgba(255,78,78,0.12);color:#CC0000}
+.score-section{width:130px;flex-shrink:0}
+.score-row{display:flex;justify-content:space-between;font-size:11px;color:#5A6A85;margin-bottom:2px}
+.bar-bg{height:5px;background:var(--gray2);border-radius:99px;overflow:hidden;margin-bottom:5px}
+.bar-fill{height:100%;border-radius:99px}
+.bar-teal{background:var(--teal)}
+.bar-blue{background:var(--blue)}
+.score-num{font-size:18px;font-weight:500;color:var(--navy);text-align:right}
+.actions{display:flex;gap:6px;flex-shrink:0;flex-direction:column}
+.warn-box{background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:#A06200;display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.notif{background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.3);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:#007A67;display:flex;align-items:center;gap:6px;margin-bottom:6px;animation:fadeIn 0.3s ease}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.metric{background:var(--white);border:1.5px solid var(--gray2);border-radius:var(--border-radius-lg);padding:14px}
+.metric-label{font-size:11px;color:#5A6A85;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.metric-value{font-size:24px;font-weight:500}
+.metric-sub{font-size:11px;margin-top:3px}
+.wl-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.wl-name{width:90px;font-size:12px;color:var(--navy);font-weight:500}
+.wl-bg{flex:1;height:8px;background:var(--gray2);border-radius:99px;overflow:hidden}
+.wl-fill{height:100%;border-radius:99px;transition:width 0.7s ease}
+.wl-count{width:36px;text-align:right;font-size:12px;color:#5A6A85}
+.log-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--gray2)}
+.log-row:last-child{border-bottom:none}
+.emp-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--gray2);animation:fadeIn 0.3s ease}
+.emp-row:last-child{border-bottom:none}
+.skill-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.skill-tag{font-size:10px;padding:1px 7px;border-radius:99px;background:var(--gray1);color:#5A6A85;border:1px solid var(--gray2)}
+.skill-input-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.skill-input-row select{width:110px;height:32px;padding:0 8px;font-size:12px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);color:var(--navy);background:var(--white)}
+.skill-lv{font-size:13px;font-weight:500;color:var(--teal);width:22px;text-align:right;flex-shrink:0}
+.remove-skill{background:none;border:none;cursor:pointer;color:var(--red);font-size:15px;padding:0 2px;flex-shrink:0}
+.add-skill-btn{height:30px;padding:0 10px;font-size:12px;border:1.5px dashed var(--gray3);border-radius:var(--border-radius-md);background:transparent;color:#5A6A85;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-top:4px}
+.add-skill-btn:hover{border-color:var(--teal);color:var(--teal)}
+.save-notif{background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.3);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:#007A67;display:none;align-items:center;gap:6px;margin-top:10px}
+.err-notif{background:rgba(255,78,78,0.08);border:1px solid rgba(255,78,78,0.25);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:var(--red);display:none;align-items:center;gap:6px;margin-top:8px}
+.settings-tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:1.5px solid var(--gray2)}
+.stab{padding:8px 16px;font-size:13px;cursor:pointer;color:#5A6A85;border-bottom:2px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;border-radius:var(--border-radius-md) var(--border-radius-md) 0 0}
+.stab:hover{color:var(--navy);background:var(--gray1)}
+.stab.active{color:var(--navy);font-weight:500;border-bottom-color:var(--teal)}
+.stab-content{display:none}
+.stab-content.active{display:block}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray2)}
+.setting-row:last-child{border-bottom:none}
+.setting-title{font-size:13px;font-weight:500;color:var(--navy)}
+.setting-desc{font-size:12px;color:#5A6A85;margin-top:2px}
+.toggle{width:40px;height:22px;border-radius:99px;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;border:none}
+.toggle.on{background:var(--teal)}
+.toggle.off{background:var(--gray2)}
+.toggle-dot{position:absolute;width:16px;height:16px;background:var(--white);border-radius:50%;top:3px;transition:left 0.2s}
+.toggle.on .toggle-dot{left:21px}
+.toggle.off .toggle-dot{left:3px}
+.weight-row{display:flex;align-items:center;gap:12px;padding:10px 0}
+.weight-label{font-size:13px;color:var(--navy);width:160px}
+.weight-val{font-size:14px;font-weight:500;color:var(--teal);width:50px;text-align:right}
+.profile-field{margin-bottom:12px}
+.profile-field label{font-size:12px;color:#5A6A85;display:block;margin-bottom:4px}
+.profile-field input,.profile-field select{width:100%;height:34px;padding:0 10px;font-size:13px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);background:var(--white);color:var(--navy)}
+.profile-field input:focus,.profile-field select:focus{outline:none;border-color:var(--teal)}
+/* MODAL — inline div, scroll içinde */
+.modal-wrap{display:none;position:absolute;inset:0;background:rgba(15,31,61,0.5);z-index:200;align-items:flex-start;justify-content:center;padding-top:40px}
+.modal-wrap.show{display:flex}
+.modal-box{background:var(--white);border-radius:var(--border-radius-lg);padding:22px;width:460px;max-height:480px;overflow-y:auto;border:1.5px solid var(--gray2);animation:fadeIn 0.2s ease}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-title{font-size:15px;font-weight:500;color:var(--navy)}
+.modal-close{background:none;border:none;cursor:pointer;color:#5A6A85;font-size:20px;line-height:1;padding:0}
+.modal-close:hover{color:var(--navy)}
+</style>
+
+<h2 class="sr-only">Görev dağıtım sistemi — profil düzenleme düzeltilmiş</h2>
+
+<div style="position:relative;height:600px" id="root">
+<div class="app">
+  <div class="sidebar">
+    <div class="logo-box">
+      <div class="logo-title"><i class="ti ti-cpu" aria-hidden="true" style="color:var(--teal);margin-right:6px"></i>AI Atama</div>
+      <div class="logo-sub">Yönetici Paneli</div>
+    </div>
+    <div style="padding:10px 0">
+      <div class="nav-item active" onclick="nav('assign')" id="nav-assign"><i class="ti ti-user-check" aria-hidden="true"></i> Görev Ata</div>
+      <div class="nav-item" onclick="nav('dashboard')" id="nav-dashboard"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</div>
+      <div class="nav-item" onclick="nav('employees')" id="nav-employees"><i class="ti ti-users" aria-hidden="true"></i> Çalışanlar</div>
+      <div class="nav-item" onclick="nav('log')" id="nav-log"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Atama Logu</div>
+    </div>
+    <div class="nav-bottom">
+      <div class="nav-item" onclick="nav('settings')" id="nav-settings"><i class="ti ti-settings" aria-hidden="true"></i> Ayarlar</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="page-title">Görev Ata</div>
+        <div class="topbar-sub" id="page-sub">Yeni görev tanımla, AI önerilerini gör</div>
+      </div>
+      <span class="badge badge-teal"><i class="ti ti-robot" aria-hidden="true"></i> Groq API aktif</span>
+    </div>
+
+    <!-- GÖREV ATA -->
+    <div class="page" id="page-assign">
+      <div class="card">
+        <div class="section-label">Görev bilgileri</div>
+        <div class="form-row">
+          <div class="field"><label>Görev adı</label><input type="text" id="task-title" value="React dashboard bileşeni"></div>
+          <div class="field"><label>Kategori</label><select id="task-cat"><option value="frontend" selected>Frontend</option><option value="backend">Backend</option><option value="devops">DevOps</option><option value="data">Data</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Öncelik</label><select><option>Yüksek</option><option>Kritik</option><option>Orta</option></select></div>
+          <div class="field"><label>Açıklama</label><input type="text" value="Dashboard için React bileşeni yazımı"></div>
+        </div>
+        <button class="btn btn-primary" onclick="runAI()"><i class="ti ti-sparkles" aria-hidden="true"></i> AI Önerisi Al</button>
+      </div>
+      <div id="notif-area"></div>
+      <div id="cand-area"></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page hidden" id="page-dashboard">
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">Toplam çalışan</div><div class="metric-value" style="color:var(--teal)" id="dash-total">5</div></div>
+        <div class="metric"><div class="metric-label">Aktif görev</div><div class="metric-value" style="color:var(--blue)" id="dash-active">11</div></div>
+        <div class="metric"><div class="metric-label">Kabul oranı</div><div class="metric-value" id="accept-rate" style="color:var(--teal)">—</div><div class="metric-sub" style="color:#5A6A85">hedef ≥ %65</div></div>
+        <div class="metric"><div class="metric-label">Std. sapma σ</div><div class="metric-value" style="color:var(--red)">2.4</div><div class="metric-sub" style="color:var(--red)"><i class="ti ti-alert-triangle" aria-hidden="true"></i> eşik aşıldı</div></div>
+      </div>
+      <div class="card"><div class="section-label">İş yükü dağılımı</div><div id="wl-list"></div></div>
+    </div>
+
+    <!-- ÇALIŞANLAR -->
+    <div class="page hidden" id="page-employees">
+      <div class="card">
+        <div class="section-label">Yeni çalışan ekle</div>
+        <div class="form-row">
+          <div class="field"><label>Ad Soyad *</label><input type="text" id="new-name" placeholder="örn. Ahmet Yıldız"></div>
+          <div class="field"><label>E-posta *</label><input type="text" id="new-email" placeholder="ahmet@sirket.com"></div>
+        </div>
+        <div class="form-row3">
+          <div class="field"><label>Departman</label><select id="new-dept"><option>Frontend</option><option>Backend</option><option>Full-Stack</option><option>DevOps</option><option>Data</option></select></div>
+          <div class="field"><label>Rol</label><select id="new-role"><option value="employee">Çalışan</option><option value="scrum_master">Scrum Master</option></select></div>
+          <div class="field"><label>Maks. kapasite</label><select id="new-max"><option value="3">3</option><option value="5" selected>5</option><option value="7">7</option><option value="10">10</option></select></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:12px;color:#5A6A85;margin-bottom:8px">Yetkinlikler *</div>
+          <div id="skill-inputs"></div>
+          <button class="add-skill-btn" onclick="addSkillRow('skill-inputs')"><i class="ti ti-plus" aria-hidden="true"></i> Yetkinlik ekle</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn btn-teal" onclick="addEmployee()"><i class="ti ti-user-plus" aria-hidden="true"></i> Çalışanı Ekle</button>
+          <button class="btn" onclick="clearForm()"><i class="ti ti-x" aria-hidden="true"></i> Temizle</button>
+        </div>
+        <div class="err-notif" id="emp-err"><i class="ti ti-alert-circle" aria-hidden="true"></i> <span id="emp-err-msg">Hata</span></div>
+        <div class="save-notif" id="emp-ok"><i class="ti ti-check-circle" aria-hidden="true"></i> Çalışan başarıyla eklendi!</div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="section-label" style="margin-bottom:0">Mevcut çalışanlar</div>
+          <span class="badge badge-blue" id="emp-count">5 çalışan</span>
+        </div>
+        <div id="emp-list"></div>
+      </div>
+    </div>
+
+    <!-- LOG -->
+    <div class="page hidden" id="page-log">
+      <div class="card"><div class="section-label">Tüm kararlar — silinemez</div><div id="log-list"></div></div>
+    </div>
+
+    <!-- AYARLAR -->
+    <div class="page hidden" id="page-settings">
+      <div class="settings-tabs">
+        <div class="stab active" onclick="stab('profil')" id="stab-profil">Profil</div>
+        <div class="stab" onclick="stab('algoritma')" id="stab-algoritma">Algoritma</div>
+        <div class="stab" onclick="stab('bildirim')" id="stab-bildirim">Bildirimler</div>
+        <div class="stab" onclick="stab('sistem')" id="stab-sistem">Sistem</div>
+      </div>
+      <div class="stab-content active card" id="stab-content-profil">
+        <div class="section-label">Kullanıcı bilgileri</div>
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(0,201,167,0.15);color:#007A67;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:500;margin-bottom:14px">YY</div>
+        <div class="form-row"><div class="profile-field"><label>Ad Soyad</label><input type="text" value="Yönetici Yılmaz"></div><div class="profile-field"><label>E-posta</label><input type="text" value="yonetici@sirket.com"></div></div>
+        <div class="form-row"><div class="profile-field"><label>Departman</label><input type="text" value="Mühendislik"></div><div class="profile-field"><label>Rol</label><input value="Scrum Master" readonly style="width:100%;height:34px;padding:0 10px;font-size:13px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);background:var(--gray1);color:#5A6A85"></div></div>
+        <button class="btn btn-primary" onclick="saveNotif('s1')"><i class="ti ti-device-floppy" aria-hidden="true"></i> Kaydet</button>
+        <div class="save-notif" id="s1"><i class="ti ti-check-circle" aria-hidden="true"></i> Kaydedildi</div>
+      </div>
+      <div class="stab-content card" id="stab-content-algoritma">
+        <div class="section-label">Puanlama ağırlıkları</div>
+        <div class="weight-row"><div class="weight-label"><i class="ti ti-star" aria-hidden="true" style="color:var(--teal);margin-right:6px"></i>Yetkinlik ağırlığı</div><input type="range" min="30" max="80" value="60" id="skill-w" oninput="updateW()" style="flex:1"><div class="weight-val" id="skill-val">%60</div></div>
+        <div class="weight-row"><div class="weight-label"><i class="ti ti-chart-bar" aria-hidden="true" style="color:var(--blue);margin-right:6px"></i>İş yükü ağırlığı</div><input type="range" min="20" max="70" value="40" id="work-w" oninput="updateW()" style="flex:1"><div class="weight-val" id="work-val">%40</div></div>
+        <div style="background:var(--gray1);border-radius:var(--border-radius-md);padding:10px 14px;margin-top:4px;font-size:12px;color:#5A6A85"><i class="ti ti-info-circle" aria-hidden="true"></i> Toplam ağırlık %100 olmalı.</div>
+        <button class="btn btn-primary" onclick="saveNotif('s2')" style="margin-top:12px"><i class="ti ti-device-floppy" aria-hidden="true"></i> Kaydet</button>
+        <div class="save-notif" id="s2"><i class="ti ti-check-circle" aria-hidden="true"></i> Algoritma güncellendi</div>
+      </div>
+      <div class="stab-content card" id="stab-content-bildirim">
+        <div class="section-label">Bildirim tercihleri</div>
+        <div class="setting-row"><div><div class="setting-title">Yeni görev ataması</div><div class="setting-desc">Görev atandığında bildirim al</div></div><button class="toggle on" onclick="toggleBtn(this)" aria-label="t1"><div class="toggle-dot"></div></button></div>
+        <div class="setting-row"><div><div class="setting-title">İş yükü uyarısı</div><div class="setting-desc">σ > 2 olduğunda uyar</div></div><button class="toggle on" onclick="toggleBtn(this)" aria-label="t2"><div class="toggle-dot"></div></button></div>
+        <div class="setting-row"><div><div class="setting-title">Kabul oranı düştüğünde</div><div class="setting-desc">%65 altına inince bildir</div></div><button class="toggle off" onclick="toggleBtn(this)" aria-label="t3"><div class="toggle-dot"></div></button></div>
+        <div class="setting-row"><div><div class="setting-title">API hatası</div><div class="setting-desc">Groq API bağlantısı kesilirse</div></div><button class="toggle on" onclick="toggleBtn(this)" aria-label="t4"><div class="toggle-dot"></div></button></div>
+      </div>
+      <div class="stab-content card" id="stab-content-sistem">
+        <div class="section-label">Sistem ayarları</div>
+        <div class="setting-row"><div><div class="setting-title">Groq API entegrasyonu</div><div class="setting-desc">Doğal dil açıklamaları aktif</div></div><button class="toggle on" onclick="toggleBtn(this)" aria-label="t5"><div class="toggle-dot"></div></button></div>
+        <div class="setting-row"><div><div class="setting-title">RBAC erişim kontrolü</div><div class="setting-desc">Rol tabanlı yetkilendirme</div></div><button class="toggle on" onclick="toggleBtn(this)" aria-label="t6"><div class="toggle-dot"></div></button></div>
+        <div style="border-top:1px solid var(--gray2);padding-top:14px;margin-top:4px"><div class="section-label">API ayarları</div><div class="profile-field"><label>Groq API anahtarı</label><input type="password" value="gsk_••••••••••••••••••••••••"></div><div class="profile-field"><label>Model</label><select style="width:100%;height:34px;padding:0 10px;font-size:13px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);background:var(--white);color:var(--navy)"><option selected>llama-3.3-70b</option><option>llama-3.1-8b</option><option>mixtral-8x7b</option></select></div></div>
+        <div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-primary" onclick="saveNotif('s3')"><i class="ti ti-device-floppy" aria-hidden="true"></i> Kaydet</button><button class="btn btn-danger"><i class="ti ti-trash" aria-hidden="true"></i> Logları sıfırla</button></div>
+        <div class="save-notif" id="s3"><i class="ti ti-check-circle" aria-hidden="true"></i> Kaydedildi</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL — app dışında, root içinde -->
+<div class="modal-wrap" id="edit-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title"><i class="ti ti-edit" aria-hidden="true" style="color:var(--teal);margin-right:6px"></i>Profil Düzenle</div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Kapat">×</button>
+    </div>
+    <div class="form-row">
+      <div class="profile-field"><label>Ad Soyad</label><input type="text" id="edit-name"></div>
+      <div class="profile-field"><label>E-posta</label><input type="text" id="edit-email"></div>
+    </div>
+    <div class="form-row3">
+      <div class="profile-field"><label>Departman</label>
+        <select id="edit-dept"><option>Frontend</option><option>Backend</option><option>Full-Stack</option><option>DevOps</option><option>Data</option></select>
+      </div>
+      <div class="profile-field"><label>Rol</label>
+        <select id="edit-role"><option value="employee">Çalışan</option><option value="scrum_master">Scrum Master</option></select>
+      </div>
+      <div class="profile-field"><label>Maks. kapasite</label>
+        <select id="edit-max"><option value="3">3</option><option value="5">5</option><option value="7">7</option><option value="10">10</option></select>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:12px;color:#5A6A85;margin-bottom:8px">Yetkinlikler</div>
+      <div id="edit-skill-inputs"></div>
+      <button class="add-skill-btn" onclick="addSkillRow('edit-skill-inputs')"><i class="ti ti-plus" aria-hidden="true"></i> Yetkinlik ekle</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-teal" onclick="saveEdit()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Kaydet</button>
+      <button class="btn" onclick="closeModal()"><i class="ti ti-x" aria-hidden="true"></i> İptal</button>
+    </div>
+    <div class="save-notif" id="edit-ok" style="margin-top:10px"><i class="ti ti-check-circle" aria-hidden="true"></i> Profil güncellendi!</div>
+  </div>
+</div>
+</div>
+
+<script>
+let EMP=[
+  {id:"e1",name:"Ayşe Kaya",init:"AK",email:"ayse@sirket.com",dept:"Frontend",role:"employee",skill:7,active:1,max:5,available:true,skills:[{cat:"frontend",lv:7}]},
+  {id:"e2",name:"Ali Yılmaz",init:"AY",email:"ali@sirket.com",dept:"Frontend",role:"scrum_master",skill:8,active:2,max:5,available:true,skills:[{cat:"frontend",lv:8},{cat:"backend",lv:6}]},
+  {id:"e3",name:"Mehmet Demir",init:"MD",email:"mehmet@sirket.com",dept:"Frontend",role:"employee",skill:9,active:4,max:5,available:true,skills:[{cat:"frontend",lv:9}]},
+  {id:"e4",name:"Zeynep Arslan",init:"ZA",email:"zeynep@sirket.com",dept:"Full-Stack",role:"employee",skill:6,active:0,max:5,available:true,skills:[{cat:"frontend",lv:6},{cat:"backend",lv:5}]},
+  {id:"e5",name:"Can Öztürk",init:"CÖ",email:"can@sirket.com",dept:"Backend",role:"employee",skill:4,active:4,max:5,available:false,skills:[{cat:"backend",lv:4}]},
+];
+const logs=[];
+const avCols=['av0','av1','av2','av3','av4'];
+const rC=['rank1','rank2','rank3'];
+const aiT=["Yüksek iş yükü boşluğu ve güçlü yetkinliğiyle öne çıkıyor.","Dengeli iş yükü ve teknik yetkinliği bu göreve uygun kılıyor.","Güçlü yetkinliğe karşın iş yükü yüksek; üçüncü en uygun aday."];
+const pageMeta={assign:{title:"Görev Ata",sub:"Yeni görev tanımla, AI önerilerini gör"},dashboard:{title:"Dashboard",sub:"Ekip iş yükü dağılımı"},employees:{title:"Çalışanlar",sub:"Çalışan ekle, profil düzenle"},log:{title:"Atama Logu",sub:"Tüm kararlar kaydedilir, silinemez"},settings:{title:"Ayarlar",sub:"Profil, algoritma ve sistem tercihleri"}};
+let editingId=null;
+let skillCounter=0;
+
+function roleBadge(r){
+  return r==='scrum_master'
+    ?'<span class="badge badge-purple">Scrum Master</span>'
+    :'<span class="badge badge-blue">Çalışan</span>';
+}
+
+function nav(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.remove('hidden');
+  document.getElementById('nav-'+p).classList.add('active');
+  document.getElementById('page-title').textContent=pageMeta[p].title;
+  document.getElementById('page-sub').textContent=pageMeta[p].sub;
+  if(p==='dashboard')renderDash();
+  if(p==='log')renderLog();
+  if(p==='employees')renderEmp();
+}
+
+function stab(t){
+  document.querySelectorAll('.stab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.stab-content').forEach(x=>x.classList.remove('active'));
+  document.getElementById('stab-'+t).classList.add('active');
+  document.getElementById('stab-content-'+t).classList.add('active');
+}
+
+function toggleBtn(b){b.classList.toggle('on');b.classList.toggle('off');}
+function updateW(){
+  const s=parseInt(document.getElementById('skill-w').value);
+  document.getElementById('work-w').value=100-s;
+  document.getElementById('skill-val').textContent='%'+s;
+  document.getElementById('work-val').textContent='%'+(100-s);
+}
+function saveNotif(id){const el=document.getElementById(id);if(el){el.style.display='flex';setTimeout(()=>el.style.display='none',2500);}}
+
+// --- YETKİNLİK SATIRI ---
+function makeSkillRow(containerId, cat, lv){
+  const id = ++skillCounter;
+  const row = document.createElement('div');
+  row.className='skill-input-row';
+  row.id='sr-'+id;
+  row.innerHTML=`
+    <select style="width:110px;height:32px;padding:0 8px;font-size:12px;border:1.5px solid var(--gray2);border-radius:var(--border-radius-md);color:var(--navy);background:var(--white)">
+      <option${cat==='frontend'?' selected':''}>frontend</option>
+      <option${cat==='backend'?' selected':''}>backend</option>
+      <option${cat==='devops'?' selected':''}>devops</option>
+      <option${cat==='data'?' selected':''}>data</option>
+    </select>
+    <input type="range" min="1" max="10" value="${lv}" style="flex:1" oninput="this.nextElementSibling.textContent=this.value">
+    <span class="skill-lv">${lv}</span>
+    <button class="remove-skill" onclick="document.getElementById('sr-${id}').remove()" aria-label="Kaldır"><i class="ti ti-x" aria-hidden="true"></i></button>`;
+  document.getElementById(containerId).appendChild(row);
+}
+
+function addSkillRow(containerId){ makeSkillRow(containerId,'frontend',5); }
+
+function getSkills(containerId){
+  return Array.from(document.querySelectorAll('#'+containerId+' .skill-input-row')).map(r=>({
+    cat: r.querySelector('select').value,
+    lv: parseInt(r.querySelector('input[type=range]').value)
+  }));
+}
+
+// --- YENİ ÇALIŞAN ---
+function initForm(){
+  document.getElementById('skill-inputs').innerHTML='';
+  makeSkillRow('skill-inputs','frontend',5);
+}
+
+function addEmployee(){
+  const name=document.getElementById('new-name').value.trim();
+  const email=document.getElementById('new-email').value.trim();
+  const dept=document.getElementById('new-dept').value;
+  const role=document.getElementById('new-role').value;
+  const max=parseInt(document.getElementById('new-max').value);
+  const skills=getSkills('skill-inputs');
+  const errEl=document.getElementById('emp-err');
+  const errMsg=document.getElementById('emp-err-msg');
+  const okEl=document.getElementById('emp-ok');
+  if(!name){errMsg.textContent='Ad Soyad zorunludur.';errEl.style.display='flex';setTimeout(()=>errEl.style.display='none',3000);return;}
+  if(!email||!email.includes('@')){errMsg.textContent='Geçerli bir e-posta girin.';errEl.style.display='flex';setTimeout(()=>errEl.style.display='none',3000);return;}
+  if(EMP.find(e=>e.email===email)){errMsg.textContent='Bu e-posta zaten kayıtlı.';errEl.style.display='flex';setTimeout(()=>errEl.style.display='none',3000);return;}
+  if(!skills.length){errMsg.textContent='En az bir yetkinlik ekleyin.';errEl.style.display='flex';setTimeout(()=>errEl.style.display='none',3000);return;}
+  const p=name.trim().split(' ');
+  const init=p.length>=2?p[0][0].toUpperCase()+p[p.length-1][0].toUpperCase():name.substring(0,2).toUpperCase();
+  const top=skills.reduce((a,b)=>a.lv>b.lv?a:b);
+  EMP.push({id:'e'+Date.now(),name,init,email,dept,role,skill:top.lv,active:0,max,available:true,skills});
+  okEl.style.display='flex';setTimeout(()=>okEl.style.display='none',2500);
+  clearForm();renderEmp();
+}
+
+function clearForm(){
+  document.getElementById('new-name').value='';
+  document.getElementById('new-email').value='';
+  initForm();
+}
+
+// --- DÜZENLEME ---
+function openEdit(id){
+  const e=EMP.find(x=>x.id===id);
+  if(!e)return;
+  editingId=id;
+  document.getElementById('edit-name').value=e.name;
+  document.getElementById('edit-email').value=e.email;
+  // dept select
+  const deptSel=document.getElementById('edit-dept');
+  for(let o of deptSel.options) o.selected=(o.text===e.dept||o.value===e.dept);
+  // role select
+  const roleSel=document.getElementById('edit-role');
+  for(let o of roleSel.options) o.selected=(o.value===e.role);
+  // max select
+  const maxSel=document.getElementById('edit-max');
+  for(let o of maxSel.options) o.selected=(parseInt(o.value)===e.max);
+  // yetkinlikler
+  document.getElementById('edit-skill-inputs').innerHTML='';
+  e.skills.forEach(s=>makeSkillRow('edit-skill-inputs',s.cat,s.lv));
+  // notif gizle
+  document.getElementById('edit-ok').style.display='none';
+  document.getElementById('edit-modal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('edit-modal').classList.remove('show');
+  editingId=null;
+}
+
+function saveEdit(){
+  if(!editingId)return;
+  const e=EMP.find(x=>x.id===editingId);
+  if(!e)return;
+  const name=document.getElementById('edit-name').value.trim();
+  const email=document.getElementById('edit-email').value.trim();
+  if(!name||!email)return;
+  const skills=getSkills('edit-skill-inputs');
+  const top=skills.length?skills.reduce((a,b)=>a.lv>b.lv?a:b):{lv:e.skill};
+  const p=name.trim().split(' ');
+  e.name=name;
+  e.init=p.length>=2?p[0][0].toUpperCase()+p[p.length-1][0].toUpperCase():name.substring(0,2).toUpperCase();
+  e.email=email;
+  e.dept=document.getElementById('edit-dept').value;
+  e.role=document.getElementById('edit-role').value;
+  e.max=parseInt(document.getElementById('edit-max').value);
+  if(skills.length) e.skills=skills;
+  e.skill=top.lv;
+  const okEl=document.getElementById('edit-ok');
+  okEl.style.display='flex';
+  setTimeout(()=>{
+    okEl.style.display='none';
+    closeModal();
+    renderEmp();
+  },1000);
+}
+
+function removeEmployee(id){EMP=EMP.filter(e=>e.id!==id);renderEmp();}
+function toggleAvail(id){const e=EMP.find(x=>x.id===id);if(e){e.available=!e.available;renderEmp();}}
+
+function renderEmp(){
+  const list=document.getElementById('emp-list');
+  list.innerHTML=EMP.map((e,i)=>`
+    <div class="emp-row">
+      <div class="avatar ${avCols[i%5]}">${e.init}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:13px;font-weight:500;color:var(--navy)">${e.name}</span>
+          ${roleBadge(e.role)}
+        </div>
+        <div style="font-size:12px;color:#5A6A85;margin-top:1px">${e.dept} · ${e.email}</div>
+        <div class="skill-tags">${e.skills.map(s=>`<span class="skill-tag">${s.cat} ${s.lv}/10</span>`).join('')}</div>
+      </div>
+      <div style="width:72px;margin:0 10px;flex-shrink:0">
+        <div style="font-size:11px;color:#5A6A85;margin-bottom:3px">${e.active}/${e.max}</div>
+        <div class="bar-bg"><div class="bar-fill bar-teal" style="width:${Math.round(e.active/e.max*100)}%"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+        <span class="badge ${e.available?'badge-teal':'badge-red'}" style="cursor:pointer" onclick="toggleAvail('${e.id}')">${e.available?'Müsait':'İzinli'}</span>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-edit btn-sm" onclick="openEdit('${e.id}')"><i class="ti ti-edit" aria-hidden="true"></i> Düzenle</button>
+          <button class="btn btn-danger btn-sm" onclick="removeEmployee('${e.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('emp-count').textContent=EMP.length+' çalışan';
+}
+
+function score(e){const sk=e.skill/10,wl=(e.max-e.active)/e.max;return{total:sk*0.6+wl*0.4,sk,wl};}
+
+function runAI(){
+  const notif=document.getElementById('notif-area'),cand=document.getElementById('cand-area');
+  const unavail=EMP.filter(e=>!e.available);
+  const scored=EMP.filter(e=>e.available&&e.skill>0).map(e=>({...e,...score(e)})).filter(e=>e.total>=0.30).sort((a,b)=>b.total-a.total||a.name.localeCompare(b.name,'tr')).slice(0,3);
+  notif.innerHTML=unavail.length?`<div class="warn-box"><i class="ti ti-alert-circle" aria-hidden="true"></i> Müsait olmayan çalışanlar çıkarıldı: ${unavail.map(e=>e.name).join(', ')}</div>`:'';
+  cand.innerHTML=`<div class="section-label" style="margin-bottom:10px">AI önerileri — ${scored.length} aday</div>${
+    scored.map((e,i)=>`
+      <div class="cand ${rC[i]}" id="cand-${e.id}">
+        <div class="avatar ${avCols[i]}">${e.init}</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:500;color:var(--navy)">${e.name} <span class="badge badge-${i===0?'teal':i===1?'blue':'amber'}" style="margin-left:4px">#${i+1}</span></div>
+          <div style="font-size:12px;color:#5A6A85;margin-top:1px">${e.dept} · Aktif: ${e.active}/${e.max}</div>
+          <div style="font-size:11px;color:#5A6A85;margin-top:4px;font-style:italic"><i class="ti ti-robot" aria-hidden="true"></i> ${aiT[i]}</div>
+        </div>
+        <div class="score-section">
+          <div class="score-row"><span>Yetkinlik</span><span>${(e.sk*100).toFixed(0)}%</span></div>
+          <div class="bar-bg"><div class="bar-fill bar-teal" style="width:${(e.sk*100).toFixed(0)}%"></div></div>
+          <div class="score-row"><span>İş yükü</span><span>${(e.wl*100).toFixed(0)}%</span></div>
+          <div class="bar-bg"><div class="bar-fill bar-blue" style="width:${(e.wl*100).toFixed(0)}%"></div></div>
+          <div class="score-num">${e.total.toFixed(2)}</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-accept" onclick="decide('${e.id}','${e.name}',${i+1},${e.total.toFixed(2)},'accepted')"><i class="ti ti-check" aria-hidden="true"></i> Kabul</button>
+          <button class="btn btn-reject" onclick="decide('${e.id}','${e.name}',${i+1},${e.total.toFixed(2)},'rejected')"><i class="ti ti-x" aria-hidden="true"></i> Red</button>
+        </div>
+      </div>`).join('')}`;
+}
+
+function decide(id,name,rank,sc,decision){
+  const card=document.getElementById('cand-'+id);if(!card)return;
+  if(decision==='rejected'){card.style.animation='fadeOut 0.3s ease forwards';setTimeout(()=>card.remove(),300);}
+  else{
+    card.querySelectorAll('.actions button').forEach(b=>b.remove());
+    card.style.borderColor='var(--teal)';card.style.background='rgba(0,201,167,0.05)';
+    const b=document.createElement('span');b.className='badge badge-teal';b.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Atandı';
+    card.querySelector('div[style]').appendChild(b);
+  }
+  logs.unshift({taskTitle:document.getElementById('task-title').value,name,rank,score:sc,decision,time:new Date().toLocaleTimeString('tr-TR')});
+  const box=document.createElement('div');box.className='notif';
+  box.innerHTML=decision==='accepted'?`<i class="ti ti-check-circle" aria-hidden="true"></i> ${name} göreve atandı — log kaydedildi`:`<i class="ti ti-trash" aria-hidden="true"></i> ${name} reddedildi`;
+  document.getElementById('notif-area').prepend(box);setTimeout(()=>box.remove(),3000);
+}
+
+function renderDash(){
+  const total=logs.length,acc=logs.filter(l=>l.decision==='accepted').length;
+  document.getElementById('accept-rate').textContent=total?Math.round(acc/total*100)+'%':'—';
+  document.getElementById('dash-total').textContent=EMP.length;
+  document.getElementById('dash-active').textContent=EMP.reduce((s,e)=>s+e.active,0);
+  document.getElementById('wl-list').innerHTML=EMP.map(e=>{
+    const pct=Math.round(e.active/e.max*100);
+    const c=pct>=80?'var(--red)':pct>=60?'var(--amber)':'var(--teal)';
+    return `<div class="wl-row"><div class="wl-name">${e.name.split(' ')[0]}</div><div class="wl-bg"><div class="wl-fill" style="width:${pct}%;background:${c}"></div></div><div class="wl-count">${e.active}/${e.max}</div>${!e.available?'<span class="badge badge-red">İzinli</span>':pct>=80?'<span class="badge badge-red">Kritik</span>':pct>=60?'<span class="badge badge-amber">Yoğun</span>':''}</div>`;
+  }).join('');
+}
+
+function renderLog(){
+  const list=document.getElementById('log-list');
+  if(!logs.length){list.innerHTML='<div style="font-size:13px;color:#5A6A85;text-align:center;padding:24px">Henüz kayıt yok</div>';return;}
+  list.innerHTML=logs.map(l=>`<div class="log-row"><span class="badge ${l.decision==='accepted'?'badge-teal':'badge-red'}">${l.decision==='accepted'?'Kabul':'Red'}</span><span style="flex:1;color:var(--navy);font-size:13px">${l.taskTitle} → <strong>${l.name}</strong></span><span style="color:#5A6A85;font-size:12px">Skor: ${l.score} · #${l.rank} · ${l.time}</span></div>`).join('');
+}
+
+initForm();
+renderEmp();
+setTimeout(runAI,200);
+</script>

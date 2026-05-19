@@ -4,6 +4,7 @@ import * as React from "react";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
@@ -23,12 +24,12 @@ function getPageTitle(pathname: string): TranslationKey {
 export function DashboardTopNav() {
   const { locale, setLocale, t } = useI18n();
   const pathname = usePathname();
-  const title = t(getPageTitle(pathname));
+  const meta = getMeta(pathname);
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
-      <div className="flex h-14 min-w-0 items-center gap-2 px-4 lg:px-6">
+    <header className="sticky top-0 z-40 shrink-0 border-b-[1.5px] border-[var(--border)] bg-[var(--surface)]">
+      <div className="flex h-[52px] min-w-0 items-center gap-3 px-5">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button
@@ -40,18 +41,16 @@ export function DashboardTopNav() {
               <Menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0">
+          <SheetContent side="left" className="w-[210px] p-0">
             <DashboardSidebar onNavigate={() => setOpen(false)} className="w-full border-r-0" />
           </SheetContent>
         </Sheet>
 
         <div className="min-w-0 flex-1">
-          <h1 className="truncate text-sm font-semibold text-[var(--foreground)]">
-            {title}
+          <h1 className="truncate text-[15px] font-medium text-[var(--foreground)]">
+            {t(meta.title)}
           </h1>
-          <p className="hidden truncate text-xs text-[var(--muted-foreground)] sm:block">
-            {t("brandSubtitle")}
-          </p>
+          <p className="truncate text-xs text-[#5a6a85]">{t(meta.sub)}</p>
         </div>
 
         <div className="flex items-center gap-2">
