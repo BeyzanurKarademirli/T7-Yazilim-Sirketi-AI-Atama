@@ -26,12 +26,8 @@ export function SettingsScreen() {
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="w-full justify-start overflow-x-auto border-b border-[var(--border)] bg-transparent p-0">
-          <TabsTrigger value="profile" className="rounded-none border-b-2 border-transparent data-[state=active]:border-[var(--teal)] data-[state=active]:bg-transparent">
-            {t("settingsProfile")}
-          </TabsTrigger>
-          <TabsTrigger value="algorithm" className="rounded-none border-b-2 border-transparent data-[state=active]:border-[var(--teal)] data-[state=active]:bg-transparent">
-            {t("settingsAlgorithm")}
-          </TabsTrigger>
+          <TabsTrigger value="profile">{t("settingsProfile")}</TabsTrigger>
+          <TabsTrigger value="algorithm">{t("settingsAlgorithm")}</TabsTrigger>
           <TabsTrigger value="user">{t("userSettings")}</TabsTrigger>
           <TabsTrigger value="appearance">{t("appearance")}</TabsTrigger>
           <TabsTrigger value="language">{t("language")}</TabsTrigger>

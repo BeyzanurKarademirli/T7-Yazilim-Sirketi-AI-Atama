@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { AI_RATIONALE, scoreEmployee } from "@/lib/assignment-score";
 import { departmentDisplayName, employeeInitials, topSkillLevel } from "@/lib/employee-utils";
+import { notifySuccess } from "@/lib/notify";
 import { useI18n } from "@/i18n/provider";
 import { useAssignmentStore } from "@/store/assignment-store";
 import { useEmployeeStore } from "@/store/employee-store";
@@ -116,9 +117,11 @@ export function TasksScreen() {
         });
       }
       setFlash(`${candidate.name} ${t("assignedFlash")}`);
+      notifySuccess(t("toastTaskAssigned"), candidate.name);
     } else {
       setRejectedIds((prev) => new Set(prev).add(candidate.employeeId));
       setFlash(`${candidate.name} ${t("rejectedFlash")}`);
+      notifySuccess(t("toastTaskRejected"), candidate.name);
     }
     window.setTimeout(() => setFlash(null), 3000);
   }

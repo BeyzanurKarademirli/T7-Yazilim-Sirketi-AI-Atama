@@ -11,14 +11,29 @@ import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { useI18n } from "@/i18n/provider";
 import type { TranslationKey } from "@/i18n/translations";
 
-function getPageTitle(pathname: string): TranslationKey {
-  if (pathname.startsWith("/dashboard/tasks")) return "tasks";
-  if (pathname.startsWith("/dashboard/employees")) return "employees";
-  if (pathname.startsWith("/dashboard/departments")) return "departments";
-  if (pathname.startsWith("/dashboard/projects")) return "projects";
-  if (pathname.startsWith("/dashboard/ask-ai")) return "askAi";
-  if (pathname.startsWith("/dashboard/settings")) return "settings";
-  return "dashboard";
+function getMeta(pathname: string): { title: TranslationKey; sub: TranslationKey } {
+  if (pathname.startsWith("/dashboard/tasks")) {
+    return { title: "navAssignTask", sub: "pageSubAssign" };
+  }
+  if (pathname.startsWith("/dashboard/assignment-log")) {
+    return { title: "navAssignmentLog", sub: "pageSubLog" };
+  }
+  if (pathname.startsWith("/dashboard/employees")) {
+    return { title: "employees", sub: "pageSubEmployees" };
+  }
+  if (pathname.startsWith("/dashboard/departments")) {
+    return { title: "departments", sub: "pageSubDashboard" };
+  }
+  if (pathname.startsWith("/dashboard/projects")) {
+    return { title: "projects", sub: "pageSubDashboard" };
+  }
+  if (pathname.startsWith("/dashboard/ask-ai")) {
+    return { title: "askAi", sub: "askAiDescription" };
+  }
+  if (pathname.startsWith("/dashboard/settings")) {
+    return { title: "settings", sub: "pageSubSettings" };
+  }
+  return { title: "dashboard", sub: "pageSubDashboard" };
 }
 
 export function DashboardTopNav() {

@@ -153,6 +153,10 @@ export const translations = {
     toastEmployeeCreated: "Employee created",
     toastEmployeeUpdated: "Employee updated",
     toastEmployeeDeleted: "Employee deleted",
+    toastEmployeeAvailable: "Marked as available",
+    toastEmployeeOnLeave: "Marked as on leave",
+    toastTaskAssigned: "Task assigned",
+    toastTaskRejected: "Suggestion rejected",
 
     addDepartment: "Add Department",
     deleteDepartment: "Delete Department",
@@ -434,6 +438,10 @@ export const translations = {
     toastEmployeeCreated: "Çalışan eklendi",
     toastEmployeeUpdated: "Çalışan güncellendi",
     toastEmployeeDeleted: "Çalışan silindi",
+    toastEmployeeAvailable: "Müsait olarak işaretlendi",
+    toastEmployeeOnLeave: "İzinli olarak işaretlendi",
+    toastTaskAssigned: "Görev atandı",
+    toastTaskRejected: "Öneri reddedildi",
 
     addDepartment: "Departman Ekle",
     deleteDepartment: "Departmanı Sil",

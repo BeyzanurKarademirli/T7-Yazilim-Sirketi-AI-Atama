@@ -33,6 +33,7 @@ import {
   normalizeSkills,
   roleIdFromSkills,
 } from "@/lib/employee-utils";
+import { notifyError, notifySuccess } from "@/lib/notify";
 import { useEmployeeStore } from "@/store/employee-store";
 import type { AssignmentRole, Employee } from "@/types/employee";
 
@@ -82,6 +83,7 @@ export function EmployeesScreen() {
 
   function showError(key: "errorNameRequired" | "errorEmailInvalid" | "errorSkillsRequired" | "errorDuplicateEmail") {
     setFormError(t(key));
+    notifyError(t(key));
     window.setTimeout(() => setFormError(null), 3000);
   }
 
@@ -123,12 +125,40 @@ export function EmployeesScreen() {
     }
 
     setFormOk(true);
+    notifySuccess(t("toastEmployeeCreated"), trimmedName);
     window.setTimeout(() => setFormOk(false), 2500);
     clearForm();
   }
 
   function handleSaveEdit(employeeId: string, data: Omit<Employee, "id">) {
-    editEmployee(employeeId, data);
+    const result = editEmployee(employeeId, data);
+    if (!result.ok) {
+      notifyError(t(result.error));
+      return;
+    }
+    notifySuccess(t("toastEmployeeUpdated"), data.name);
+  }
+
+  function handleDelete(employee: Employee) {
+    const result = removeEmployee(employee.id);
+    if (!result.ok) {
+      notifyError(t(result.error));
+      return;
+    }
+    notifySuccess(t("toastEmployeeDeleted"), employee.name);
+  }
+
+  function handleToggleAvailability(employee: Employee) {
+    const result = toggleEmployeeAvailability(employee.id);
+    if (!result.ok) {
+      notifyError(t(result.error));
+      return;
+    }
+    const nowAvailable = employee.available === false;
+    notifySuccess(
+      nowAvailable ? t("toastEmployeeAvailable") : t("toastEmployeeOnLeave"),
+      employee.name,
+    );
   }
 
   return (
@@ -255,12 +285,12 @@ export function EmployeesScreen() {
                 key={e.id}
                 employee={e}
                 index={i}
-                onToggle={() => toggleEmployeeAvailability(e.id)}
+                onToggle={() => handleToggleAvailability(e)}
                 onEdit={() => {
                   setEditing(e);
                   setEditOpen(true);
                 }}
-                onDelete={() => removeEmployee(e.id)}
+                onDelete={() => handleDelete(e)}
                 t={t}
               />
             ))}

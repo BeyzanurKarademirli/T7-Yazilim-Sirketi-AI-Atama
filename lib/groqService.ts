@@ -5,7 +5,12 @@
 // Backend servis katmanından güvenli sorgu (istemcide çağrılmaz)
 // ============================================================
 
-import { getAssistantReply, type AssistantContext, type AssistantLocale } from "./ai-assistant";
+import {
+  getAssistantReply,
+  isUnknownAssistantReply,
+  type AssistantContext,
+  type AssistantLocale,
+} from "./ai-assistant";
 import { Candidate, Task } from "../types/assignment";
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
@@ -106,16 +111,37 @@ export async function getDashboardChatReply(
   history: GroqChatMessage[] = [],
   recommendationBlock?: string,
 ): Promise<DashboardChatResult> {
+  const localReply = getAssistantReply(question, context, locale);
+
+  if (!isUnknownAssistantReply(localReply)) {
+    return {
+      reply: recommendationBlock ? `${localReply}\n\n${recommendationBlock}` : localReply,
+      usedAi: false,
+    };
+  }
+
+  if (recommendationBlock) {
+    const intro =
+      locale === "tr"
+        ? "Görev atama önerisi:"
+        : "Task assignment recommendation:";
+    return { reply: `${intro}\n\n${recommendationBlock}`, usedAi: false };
+  }
+
   const systemPrompt = buildDashboardSystemPrompt(context, locale, recommendationBlock);
   const recentHistory = history
     .filter((m) => m.role === "user" || m.role === "assistant")
     .slice(-8);
 
+  const last = recentHistory[recentHistory.length - 1];
+  const historyEndsWithSameQuestion =
+    last?.role === "user" && last.content.trim() === question.trim();
+
   const aiText = await callGroqChat(
     [
       { role: "system", content: systemPrompt },
       ...recentHistory,
-      { role: "user", content: question },
+      ...(historyEndsWithSameQuestion ? [] : [{ role: "user" as const, content: question }]),
     ],
     { temperature: 0.35, maxTokens: 1024 },
   );
@@ -124,14 +150,7 @@ export async function getDashboardChatReply(
     return { reply: aiText, usedAi: true };
   }
 
-  const fallback = getAssistantReply(question, context, locale);
-  if (recommendationBlock) {
-    return {
-      reply: `${fallback}\n\n${recommendationBlock}`,
-      usedAi: false,
-    };
-  }
-  return { reply: fallback, usedAi: false };
+  return { reply: localReply, usedAi: false };
 }
 
 /**

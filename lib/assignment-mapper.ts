@@ -1,3 +1,4 @@
+import { normalizeForMatch } from "@/lib/ai-assistant";
 import type { RoleId } from "@/lib/seed";
 import type {
   Employee as AssignmentEmployee,
@@ -93,16 +94,14 @@ function inferCategoryFromTitle(title: string): string | null {
 }
 
 export function isRecommendationQuestion(question: string): boolean {
-  const q = question
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+  const q = normalizeForMatch(question);
 
   return [
     "gorev ata",
     "kim atan",
     "atanmali",
+    "atanmal",
+    "kime atan",
     "oneri",
     "aday",
     "uygun calisan",
@@ -110,6 +109,7 @@ export function isRecommendationQuestion(question: string): boolean {
     "recommend",
     "candidate",
     "who should",
+    "who to assign",
   ].some((p) => q.includes(p));
 }
 

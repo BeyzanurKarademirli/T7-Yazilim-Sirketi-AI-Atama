@@ -185,22 +185,21 @@ export function AskAiScreen() {
             ) : null}
           </div>
 
-          {messages.length === 0 ? (
-            <div className="flex flex-wrap gap-2 border-t border-[var(--border)] px-4 py-3 md:px-6">
-              {suggestions.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="h-auto whitespace-normal text-left"
-                  onClick={() => void submitQuestion(suggestion)}
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
-          ) : null}
+          <div className="flex flex-wrap gap-2 border-t border-[var(--border)] px-4 py-3 md:px-6">
+            {suggestions.map((suggestion) => (
+              <Button
+                key={suggestion}
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-auto whitespace-normal text-left"
+                disabled={thinking}
+                onClick={() => void submitQuestion(suggestion)}
+              >
+                {suggestion}
+              </Button>
+            ))}
+          </div>
 
           <form
             onSubmit={onSubmit}
