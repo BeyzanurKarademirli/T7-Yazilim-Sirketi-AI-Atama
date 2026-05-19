@@ -2,105 +2,81 @@
 
 import * as React from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { useI18n } from "@/i18n/provider";
 import { useEmployeeStore } from "@/store/employee-store";
-import { useTaskStore } from "@/store/task-store";
 
 export function DashboardAnalytics() {
   const { t } = useI18n();
-  const departments = useEmployeeStore((s) => s.departments);
   const employees = useEmployeeStore((s) => s.employees);
-  const tasks = useTaskStore((s) => s.tasks);
-  const loadTasks = useTaskStore((s) => s.loadTasks);
 
-  React.useEffect(() => {
-    void loadTasks();
-  }, [loadTasks]);
+  const rows = React.useMemo(() => {
+    return employees.map((e) => {
+      const max = e.maxCapacity ?? 5;
+      const active = e.activeTaskCount ?? 0;
+      const pct = max > 0 ? Math.round((active / max) * 100) : 0;
+      const barColor = pct >= 80 ? "var(--danger)" : pct >= 60 ? "var(--amber)" : "var(--teal)";
 
-  const departmentStats = React.useMemo(() => {
-    const total = Math.max(employees.length, 1);
-    return departments.map((department) => {
-      const count = employees.filter((employee) => employee.department === department.id).length;
+      let status: React.ReactNode = null;
+      if (e.available === false) {
+        status = (
+          <Badge className="shrink-0 border-0 bg-[rgba(255,78,78,0.12)] text-[#cc0000]">
+            {t("onLeave")}
+          </Badge>
+        );
+      } else if (pct >= 80) {
+        status = (
+          <Badge className="shrink-0 border-0 bg-[rgba(255,78,78,0.12)] text-[#cc0000]">
+            {t("criticalLoad")}
+          </Badge>
+        );
+      } else if (pct >= 60) {
+        status = (
+          <Badge className="shrink-0 border-0 bg-[rgba(255,179,71,0.15)] text-[#a06200]">
+            {t("busyLoad")}
+          </Badge>
+        );
+      }
+
       return {
-        name: department.name,
-        count,
-        ratio: Math.round((count / total) * 100),
+        id: e.id,
+        name: e.name.split(" ")[0] ?? e.name,
+        active,
+        max,
+        pct,
+        barColor,
+        status,
       };
     });
-  }, [departments, employees]);
-
-  const taskStatusStats = React.useMemo(() => {
-    const total = Math.max(tasks.length, 1);
-    const byStatus = {
-      todo: tasks.filter((task) => task.status === "todo").length,
-      inProgress: tasks.filter((task) => task.status === "inProgress").length,
-      done: tasks.filter((task) => task.status === "done").length,
-    };
-    return [
-      {
-        label: t("statusTodo"),
-        count: byStatus.todo,
-        ratio: Math.round((byStatus.todo / total) * 100),
-      },
-      {
-        label: t("statusInProgress"),
-        count: byStatus.inProgress,
-        ratio: Math.round((byStatus.inProgress / total) * 100),
-      },
-      {
-        label: t("statusDone"),
-        count: byStatus.done,
-        ratio: Math.round((byStatus.done / total) * 100),
-      },
-    ];
-  }, [tasks, t]);
+  }, [employees, t]);
 
   return (
-    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("employeesByDepartment")}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {departmentStats.map((item) => (
-            <div key={item.name} className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <span>{item.name}</span>
-                <span className="text-[var(--muted-foreground)]">{item.count}</span>
-              </div>
-              <div className="h-2 rounded-full bg-[var(--surface-muted)]">
+    <Card className="rounded-[var(--border-radius-lg)] border-[1.5px] border-[var(--border)] shadow-none">
+      <CardContent className="p-[18px]">
+        <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.05em] text-[#5a6a85]">
+          {t("workloadDistribution")}
+        </p>
+        <div>
+          {rows.map((row) => (
+            <div key={row.id} className="mb-2.5 flex items-center gap-2.5 last:mb-0">
+              <span className="w-[90px] shrink-0 text-xs font-medium text-[var(--foreground)]">
+                {row.name}
+              </span>
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--border)]">
                 <div
-                  className="h-full rounded-full bg-[var(--primary)] transition-all"
-                  style={{ width: `${item.ratio}%` }}
+                  className="h-full rounded-full transition-[width] duration-700 ease-out"
+                  style={{ width: `${row.pct}%`, background: row.barColor }}
                 />
               </div>
+              <span className="w-9 shrink-0 text-right text-xs text-[#5a6a85]">
+                {row.active}/{row.max}
+              </span>
+              {row.status}
             </div>
           ))}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("taskStatusDistribution")}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {taskStatusStats.map((item) => (
-            <div key={item.label} className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <span>{item.label}</span>
-                <span className="text-[var(--muted-foreground)]">{item.count}</span>
-              </div>
-              <div className="h-2 rounded-full bg-[var(--surface-muted)]">
-                <div
-                  className="h-full rounded-full bg-[var(--focus)] transition-all"
-                  style={{ width: `${item.ratio}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

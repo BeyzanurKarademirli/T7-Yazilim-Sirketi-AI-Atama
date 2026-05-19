@@ -1,33 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --background: #eef2f7;
-  --foreground: #14233d;
-  --surface: #ffffff;
-  --surface-muted: #f6f8fc;
-  --border: #d5dde8;
-  --muted-foreground: #5f6f86;
-  --primary: #1f3358;
-  --primary-soft: #2e4a79;
-  --sidebar-start: #172845;
-  --sidebar-end: #243758;
-  --focus: #3f5f95;
-  --danger: #b45454;
+  --background: #edf2f8;
+  --foreground: #1f3556;
+  --surface: #f7f9fc;
+  --surface-muted: #eef3f9;
+  --border: #e8ecf4;
+  --muted-foreground: #5a6a85;
+  --primary: #2f4f7f;
+  --primary-soft: #3f6397;
+  --sidebar-start: #2f4f7f;
+  --sidebar-end: #3f6397;
+  --navy: #2f4f7f;
+  --navy-soft: #3f6397;
+  --focus: #4a9eff;
+  --danger: #ff4e4e;
+  --teal: #00c9a7;
+  --teal-soft: #00a88a;
+  --blue: #4a9eff;
+  --amber: #ffb347;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
 }
 
 .dark {
-  --background: #10182b;
-  --foreground: #e9eef7;
-  --surface: #182339;
-  --surface-muted: #111d33;
-  --border: #2b3b59;
-  --muted-foreground: #a7b3c7;
-  --primary: #e9eef7;
-  --primary-soft: #d3dceb;
-  --sidebar-start: #0f1a2f;
-  --sidebar-end: #16243d;
+  --background: #1e2d42;
+  --foreground: #dfe8f6;
+  --surface: #2a3d5a;
+  --surface-muted: #243650;
+  --border: #415a7d;
+  --muted-foreground: #bcc9dd;
+  --primary: #4b73ac;
+  --primary-soft: #5b84bf;
+  --sidebar-start: #365a89;
+  --sidebar-end: #456b9d;
+  --navy: #365a89;
+  --navy-soft: #456b9d;
   --focus: #9eb5dd;
   --danger: #d87a7a;
+  --teal: #00c9a7;
+  --teal-soft: #00a88a;
 }
 
 @theme inline {
@@ -41,4 +53,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Dark modda sabit gri (#5a6a85) metinleri okunur seviyeye çıkar */
+.dark .text-\[\#5a6a85\] {
+  color: #bcc9dd !important;
 }
