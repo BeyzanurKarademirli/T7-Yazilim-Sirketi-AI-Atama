@@ -31,7 +31,6 @@ export type EmployeeStoreState = {
   addEmployee: (employee: Employee) => StoreResult;
   editEmployee: (employeeId: string, updated: Omit<Employee, "id">) => StoreResult;
   removeEmployee: (employeeId: string) => StoreResult;
-  toggleEmployeeAvailability: (employeeId: string) => StoreResult;
 
   addDepartment: (department: Department) => StoreResult;
   removeDepartment: (departmentId: string) => StoreResult;
@@ -58,82 +57,10 @@ export const useEmployeeStore = create<EmployeeStoreState>()(
   persist(
     (set) => ({
       employees: [
-        {
-          id: "e1",
-          name: "Ayşe Kaya",
-          init: "AK",
-          email: "ayse@sirket.com",
-          department: "eng",
-          salary: 0,
-          role: "frontendEngineer",
-          maxCapacity: 5,
-          activeTaskCount: 1,
-          available: true,
-          assignmentRole: "employee",
-          skills: [{ cat: "frontend", lv: 7 }],
-        },
-        {
-          id: "e2",
-          name: "Ali Yılmaz",
-          init: "AY",
-          email: "ali@sirket.com",
-          department: "eng",
-          salary: 0,
-          role: "frontendEngineer",
-          maxCapacity: 5,
-          activeTaskCount: 2,
-          available: true,
-          assignmentRole: "scrum_master",
-          skills: [
-            { cat: "frontend", lv: 8 },
-            { cat: "backend", lv: 6 },
-          ],
-        },
-        {
-          id: "e3",
-          name: "Mehmet Demir",
-          init: "MD",
-          email: "mehmet@sirket.com",
-          department: "eng",
-          salary: 0,
-          role: "frontendEngineer",
-          maxCapacity: 5,
-          activeTaskCount: 4,
-          available: true,
-          assignmentRole: "employee",
-          skills: [{ cat: "frontend", lv: 9 }],
-        },
-        {
-          id: "e4",
-          name: "Zeynep Arslan",
-          init: "ZA",
-          email: "zeynep@sirket.com",
-          department: "eng",
-          salary: 0,
-          role: "fullstackEngineer",
-          maxCapacity: 5,
-          activeTaskCount: 0,
-          available: true,
-          assignmentRole: "employee",
-          skills: [
-            { cat: "frontend", lv: 6 },
-            { cat: "backend", lv: 5 },
-          ],
-        },
-        {
-          id: "e5",
-          name: "Can Öztürk",
-          init: "CÖ",
-          email: "can@sirket.com",
-          department: "eng",
-          salary: 0,
-          role: "backendEngineer",
-          maxCapacity: 5,
-          activeTaskCount: 4,
-          available: false,
-          assignmentRole: "employee",
-          skills: [{ cat: "backend", lv: 4 }],
-        },
+        { id: "ahmet", name: "Ahmet", email: "ahmet@example.com", department: "eng", salary: 90000, role: "frontendEngineer" },
+        { id: "ali", name: "Ali", email: "ali@example.com", department: "eng", salary: 88000, role: "backendEngineer" },
+        { id: "ayse", name: "Ayşe", email: "ayse@example.com", department: "hr", salary: 65000, role: "hrSpecialist" },
+        { id: "mehmet", name: "Mehmet", email: "mehmet@example.com", department: "fin", salary: 72000, role: "accountant" },
       ],
       departments: DEFAULT_DEPARTMENTS,
       totalSalary: 0,
@@ -219,26 +146,6 @@ export const useEmployeeStore = create<EmployeeStoreState>()(
         }
         const employees = state.employees.filter((e) => e.id !== employeeId);
         return { employees, totalSalary: calcTotalSalary(employees) };
-      });
-      return result;
-    } catch {
-      return { ok: false, error: "errorUnknown" };
-    }
-  },
-
-  toggleEmployeeAvailability: (employeeId) => {
-    try {
-      let result: StoreResult = { ok: true };
-      set((state) => {
-        const idx = state.employees.findIndex((e) => e.id === employeeId);
-        if (idx === -1) {
-          result = { ok: false, error: "errorEmployeeNotFound" };
-          return state;
-        }
-        const employees = state.employees.map((e) =>
-          e.id === employeeId ? { ...e, available: e.available === false } : e,
-        );
-        return { employees };
       });
       return result;
     } catch {

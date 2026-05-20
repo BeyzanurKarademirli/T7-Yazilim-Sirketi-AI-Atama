@@ -6,9 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+<<<<<<< HEAD
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest"
+=======
+    "lint": "eslint"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",
@@ -35,7 +39,11 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+<<<<<<< HEAD
     "typescript": "^5",
     "vitest": "^3.2.4"
+=======
+    "typescript": "^5"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
   }
 }

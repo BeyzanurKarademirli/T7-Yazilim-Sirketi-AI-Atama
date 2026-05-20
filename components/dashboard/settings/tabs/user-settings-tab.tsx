@@ -1,7 +1,10 @@
 "use client";
 
 import * as React from "react";
+<<<<<<< HEAD
 import { LogOut } from "lucide-react";
+=======
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -11,7 +14,10 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useI18n } from "@/i18n/provider";
 import { notifyError, notifySuccess } from "@/lib/notify";
+<<<<<<< HEAD
 import { useAuthStore } from "@/store/auth-store";
+=======
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 import { useSettingsStore } from "@/store/settings-store";
 
 function initials(name: string) {
@@ -21,18 +27,26 @@ function initials(name: string) {
 
 export function UserSettingsTab() {
   const { t } = useI18n();
+<<<<<<< HEAD
   const username = useSettingsStore((s) => s.username);
   const password = useSettingsStore((s) => s.password);
+=======
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
   const profileName = useSettingsStore((s) => s.profileName);
   const profileEmail = useSettingsStore((s) => s.profileEmail);
   const profileImageDataUrl = useSettingsStore((s) => s.profileImageDataUrl);
   const notifyEmail = useSettingsStore((s) => s.notifyEmail);
   const notifyToast = useSettingsStore((s) => s.notifyToast);
+<<<<<<< HEAD
   const setUsername = useSettingsStore((s) => s.setUsername);
   const setPassword = useSettingsStore((s) => s.setPassword);
   const setProfile = useSettingsStore((s) => s.setProfile);
   const setNotify = useSettingsStore((s) => s.setNotify);
   const logout = useAuthStore((s) => s.logout);
+=======
+  const setProfile = useSettingsStore((s) => s.setProfile);
+  const setNotify = useSettingsStore((s) => s.setNotify);
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
@@ -50,11 +64,18 @@ export function UserSettingsTab() {
   }
 
   function onSaveProfile() {
+<<<<<<< HEAD
     if (!username.trim() || !profileName.trim() || !profileEmail.trim()) {
       notifyError(t("errorUnknown"));
       return;
     }
     setUsername(username);
+=======
+    if (!profileName.trim() || !profileEmail.trim()) {
+      notifyError(t("errorUnknown"));
+      return;
+    }
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     notifySuccess(t("toastSaved"));
   }
 
@@ -63,6 +84,7 @@ export function UserSettingsTab() {
       notifyError(t("errorUnknown"));
       return;
     }
+<<<<<<< HEAD
     if (currentPassword !== password) {
       notifyError(t("errorWrongPassword"));
       return;
@@ -76,6 +98,12 @@ export function UserSettingsTab() {
       return;
     }
     setPassword(newPassword);
+=======
+    if (newPassword !== confirmPassword) {
+      notifyError(t("errorUnknown"));
+      return;
+    }
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -100,6 +128,7 @@ export function UserSettingsTab() {
 
           <div className="grid gap-4">
             <div className="grid gap-2">
+<<<<<<< HEAD
               <Label htmlFor="username">{t("username")}</Label>
               <Input
                 id="username"
@@ -109,6 +138,8 @@ export function UserSettingsTab() {
               />
             </div>
             <div className="grid gap-2">
+=======
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
               <Label htmlFor="profileName">{t("name")}</Label>
               <Input
                 id="profileName"
@@ -209,6 +240,7 @@ export function UserSettingsTab() {
           </div>
         </CardContent>
       </Card>
+<<<<<<< HEAD
 
       <Card>
         <CardHeader>
@@ -229,6 +261,8 @@ export function UserSettingsTab() {
           </Button>
         </CardContent>
       </Card>
+=======
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     </div>
   );
 }

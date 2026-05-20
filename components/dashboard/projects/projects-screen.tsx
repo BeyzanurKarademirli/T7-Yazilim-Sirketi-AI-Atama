@@ -63,7 +63,11 @@ function CreateProjectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
+<<<<<<< HEAD
           <DialogTitle className="text-lg font-semibold text-[var(--foreground)]">
+=======
+          <DialogTitle className="text-lg font-semibold text-zinc-900 dark:text-white">
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
             {t("addProject")}
           </DialogTitle>
         </DialogHeader>
@@ -71,7 +75,11 @@ function CreateProjectDialog({
           <div className="grid gap-2">
             <Label
               htmlFor="projectName"
+<<<<<<< HEAD
               className="text-sm font-medium text-[var(--foreground)]"
+=======
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
             >
               {t("projectName")}
             </Label>
@@ -79,14 +87,22 @@ function CreateProjectDialog({
               id="projectName"
               value={name}
               onChange={(e) => setName(e.target.value)}
+<<<<<<< HEAD
               className="text-sm text-[var(--foreground)]"
+=======
+              className="text-sm text-zinc-900 dark:text-white"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
               placeholder={t("projectName")}
             />
           </div>
           <div className="grid gap-2">
             <Label
               htmlFor="projectDescription"
+<<<<<<< HEAD
               className="text-sm font-medium text-[var(--foreground)]"
+=======
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
             >
               {t("projectDescription")}
             </Label>
@@ -94,7 +110,11 @@ function CreateProjectDialog({
               id="projectDescription"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+<<<<<<< HEAD
               className="text-sm text-[var(--foreground)]"
+=======
+              className="text-sm text-zinc-900 dark:text-white"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
               placeholder={t("projectDescription")}
             />
           </div>
@@ -193,7 +213,11 @@ export function ProjectsScreen() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">{t("projects")}</h2>
+<<<<<<< HEAD
           <p className="text-sm text-[var(--muted-foreground)]">
+=======
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
             {t("projectsDescription")}
           </p>
         </div>
@@ -207,9 +231,15 @@ export function ProjectsScreen() {
         {projects.map((project) => (
           <Card
             key={project.id}
+<<<<<<< HEAD
             className={`cursor-pointer transition hover:border-[var(--focus)] ${
               selectedProject?.id === project.id
                 ? "border-[var(--primary)]"
+=======
+            className={`cursor-pointer transition hover:border-zinc-400 dark:hover:border-gray-500 ${
+              selectedProject?.id === project.id
+                ? "border-zinc-900 dark:border-white"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                 : ""
             }`}
             onClick={() => setSelectedProjectId(project.id)}
@@ -217,7 +247,11 @@ export function ProjectsScreen() {
             <CardHeader className="flex flex-row items-start justify-between gap-2">
               <div className="space-y-1">
                 <CardTitle className="truncate">{project.name}</CardTitle>
+<<<<<<< HEAD
                 <p className="line-clamp-2 text-xs text-[var(--muted-foreground)]">
+=======
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2">
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                   {project.description}
                 </p>
               </div>
@@ -232,10 +266,17 @@ export function ProjectsScreen() {
                   notifySuccess(t("toastProjectDeleted"), project.name);
                 }}
               >
+<<<<<<< HEAD
                 <Trash2 className="h-4 w-4 text-[var(--danger)]" />
               </Button>
             </CardHeader>
             <CardContent className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+=======
+                <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
+              </Button>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
               <span>
                 {t("totalGroups")}: {project.groups.length}
               </span>
@@ -302,7 +343,11 @@ export function ProjectsScreen() {
                         <button
                           type="button"
                           onClick={() => onRemoveFromGroup(currentGroup.groupName, emp.id)}
+<<<<<<< HEAD
                           className="ml-1 text-xs text-[var(--danger)] hover:opacity-90"
+=======
+                          className="ml-1 text-xs text-red-600 hover:text-red-700 dark:text-red-400"
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                         >
                           ×
                         </button>
@@ -310,7 +355,11 @@ export function ProjectsScreen() {
                     ))}
                   </div>
                 ) : (
+<<<<<<< HEAD
                   <p className="text-sm text-[var(--muted-foreground)]">
+=======
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+>>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                     {t("noEmployees")}
                   </p>
                 )}
