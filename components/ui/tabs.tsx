@@ -14,11 +14,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-<<<<<<< HEAD
       "inline-flex h-10 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--surface)] p-1 text-[var(--muted-foreground)]",
-=======
-      "inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-white p-1 text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
       className,
     )}
     {...props}
@@ -33,11 +29,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-<<<<<<< HEAD
       "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[var(--primary)] data-[state=active]:text-white",
-=======
-      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-zinc-900 data-[state=active]:text-zinc-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-50 dark:data-[state=active]:bg-zinc-50 dark:data-[state=active]:text-zinc-900",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
       className,
     )}
     {...props}
@@ -52,11 +44,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-<<<<<<< HEAD
       "mt-4 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus)] focus-visible:ring-offset-2",
-=======
-      "mt-4 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-50",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
       className,
     )}
     {...props}

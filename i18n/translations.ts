@@ -2,7 +2,6 @@ export const translations = {
   en: {
     dashboard: "Dashboard",
     employees: "Employees",
-<<<<<<< HEAD
     tasks: "Tasks",
     departments: "Departments",
     projects: "Projects",
@@ -96,14 +95,6 @@ export const translations = {
     skillWeightLabel: "Skill weight",
     workWeightLabel: "Workload weight",
     weightsMustSum: "Total weight must equal 100%.",
-=======
-    departments: "Departments",
-    projects: "Projects",
-    settings: "Settings",
-
-    brandTitle: "Employee Admin",
-    brandSubtitle: "Management Dashboard",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
     overview: "Overview of your organization.",
 
@@ -152,10 +143,7 @@ export const translations = {
 
     noEmployees: "No employees yet. Click “Add Employee” to create your first record.",
     employeesDescription: "Manage employee records, departments, and compensation.",
-<<<<<<< HEAD
     tasksDescription: "Assign tasks to employees and track sprint progress.",
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     departmentsDescription: "Manage departments and reporting structure.",
     settingsDescription: "Configure your dashboard preferences.",
 
@@ -165,13 +153,10 @@ export const translations = {
     toastEmployeeCreated: "Employee created",
     toastEmployeeUpdated: "Employee updated",
     toastEmployeeDeleted: "Employee deleted",
-<<<<<<< HEAD
     toastEmployeeAvailable: "Marked as available",
     toastEmployeeOnLeave: "Marked as on leave",
     toastTaskAssigned: "Task assigned",
     toastTaskRejected: "Suggestion rejected",
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
     addDepartment: "Add Department",
     deleteDepartment: "Delete Department",
@@ -182,7 +167,6 @@ export const translations = {
     toastDepartmentAdded: "Department added",
     toastDepartmentDeleted: "Department deleted",
 
-<<<<<<< HEAD
     // Tasks
     taskAssignment: "Task Assignment",
     addTask: "Add Task",
@@ -210,8 +194,6 @@ export const translations = {
     seeTaskBoardHint: "Track details from the Tasks page.",
     activeTasks: "Active tasks",
 
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     // Projects
     projectsDescription: "Manage projects, groups, and employee assignments.",
     addProject: "Add Project",
@@ -291,17 +273,12 @@ export const translations = {
     toastReset: "Data reset",
     saved: "Saved",
 
-<<<<<<< HEAD
     // Analytics
     employeesByDepartment: "Employees by Department",
     taskStatusDistribution: "Task Status Distribution",
 
     errorUnknown: "Something went wrong.",
     errorDuplicateEmail: "This email is already registered.",
-=======
-    errorUnknown: "Something went wrong.",
-    errorDuplicateEmail: "This email is already used.",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     errorEmployeeNotFound: "Employee not found.",
     errorDepartmentInUse: "This department is assigned to employees.",
     errorDuplicateDepartment: "This department already exists.",
@@ -309,7 +286,6 @@ export const translations = {
   tr: {
     dashboard: "Panel",
     employees: "Çalışanlar",
-<<<<<<< HEAD
     tasks: "Görevler",
     departments: "Departmanlar",
     projects: "Projeler",
@@ -404,14 +380,6 @@ export const translations = {
     skillWeightLabel: "Yetkinlik ağırlığı",
     workWeightLabel: "İş yükü ağırlığı",
     weightsMustSum: "Toplam ağırlık %100 olmalı.",
-=======
-    departments: "Departmanlar",
-    projects: "Projeler",
-    settings: "Ayarlar",
-
-    brandTitle: "Personel Yönetimi",
-    brandSubtitle: "Yönetim Paneli",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
     overview: "Kurumunuzun genel görünümü.",
 
@@ -460,10 +428,7 @@ export const translations = {
 
     noEmployees: "Henüz çalışan yok. İlk kaydı oluşturmak için “Çalışan Ekle”ye tıklayın.",
     employeesDescription: "Çalışan kayıtlarını, departmanları ve ücretleri yönetin.",
-<<<<<<< HEAD
     tasksDescription: "Çalışanlara görev atayın ve sprint ilerlemesini takip edin.",
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     departmentsDescription: "Departmanları ve raporlama yapısını yönetin.",
     settingsDescription: "Panel tercihlerinizi yapılandırın.",
 
@@ -473,13 +438,10 @@ export const translations = {
     toastEmployeeCreated: "Çalışan eklendi",
     toastEmployeeUpdated: "Çalışan güncellendi",
     toastEmployeeDeleted: "Çalışan silindi",
-<<<<<<< HEAD
     toastEmployeeAvailable: "Müsait olarak işaretlendi",
     toastEmployeeOnLeave: "İzinli olarak işaretlendi",
     toastTaskAssigned: "Görev atandı",
     toastTaskRejected: "Öneri reddedildi",
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
     addDepartment: "Departman Ekle",
     deleteDepartment: "Departmanı Sil",
@@ -490,7 +452,6 @@ export const translations = {
     toastDepartmentAdded: "Departman eklendi",
     toastDepartmentDeleted: "Departman silindi",
 
-<<<<<<< HEAD
     // Tasks
     taskAssignment: "Görev Atama",
     addTask: "Görev Ekle",
@@ -518,8 +479,6 @@ export const translations = {
     seeTaskBoardHint: "Detaylar için Görevler sayfasını kullanın.",
     activeTasks: "Aktif görevler",
 
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     // Projects
     projectsDescription: "Projeleri, grupları ve çalışan atamalarını yönetin.",
     addProject: "Proje Ekle",
@@ -599,17 +558,12 @@ export const translations = {
     toastReset: "Veriler sıfırlandı",
     saved: "Kaydedildi",
 
-<<<<<<< HEAD
     // Analytics
     employeesByDepartment: "Departmana Göre Çalışan",
     taskStatusDistribution: "Görev Durumu Dağılımı",
 
     errorUnknown: "Bir şeyler ters gitti.",
     errorDuplicateEmail: "Bu e-posta zaten kayıtlı.",
-=======
-    errorUnknown: "Bir şeyler ters gitti.",
-    errorDuplicateEmail: "Bu e-posta zaten kullanılıyor.",
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
     errorEmployeeNotFound: "Çalışan bulunamadı.",
     errorDepartmentInUse: "Bu departman çalışanlara atanmış.",
     errorDuplicateDepartment: "Bu departman zaten mevcut.",

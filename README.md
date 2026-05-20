@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Project Presentation
 You can access the weekly progress presentation [here](./2.Hafta3.Grup.pdf).
 
@@ -8,8 +7,6 @@ You can access the weekly progress presentation [here](./2.Hafta3.Grup.pdf).
 - [Frontend Gelistirme Sprint Ciktilari](./docs/frontend-development-sprint.md)
 
 
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

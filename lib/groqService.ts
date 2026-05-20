@@ -5,28 +5,21 @@
 // Backend servis katmanından güvenli sorgu (istemcide çağrılmaz)
 // ============================================================
 
-<<<<<<< HEAD
 import {
   getAssistantReply,
   isUnknownAssistantReply,
   type AssistantContext,
   type AssistantLocale,
 } from "./ai-assistant";
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 import { Candidate, Task } from "../types/assignment";
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.3-70b-versatile";
-<<<<<<< HEAD
 const GROQ_TIMEOUT_MS = 12_000;
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
 const FALLBACK_EXPLANATION =
   "Bu aday, görevin gerektirdiği yetkinlik ve mevcut iş yükü dengesi açısından en uygun profili sergilemiştir.";
 
-<<<<<<< HEAD
 export type GroqChatMessage = {
   role: "system" | "user" | "assistant";
   content: string;
@@ -160,8 +153,6 @@ export async function getDashboardChatReply(
   return { reply: localReply, usedAi: false };
 }
 
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 /**
  * Groq API'ye gönderilecek prompt'u oluşturur.
  * Personel listesi + görev detayları JSON formatında gönderilir.
@@ -202,7 +193,6 @@ interface GroqExplanation {
   explanation: string;
 }
 
-<<<<<<< HEAD
 function parseJsonArrayFromAiText<T>(rawText: string): T {
   const trimmed = rawText.trim();
   try {
@@ -221,8 +211,6 @@ function parseJsonArrayFromAiText<T>(rawText: string): T {
   }
 }
 
-=======
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 /**
  * Groq API'den her aday için doğal dil açıklaması alır.
  * API hatası durumunda fallback metin kullanılır — sistem çalışmaya devam eder.
@@ -243,7 +231,6 @@ export async function getAiExplanations(
 
   try {
     const prompt = buildPrompt(task, candidates);
-<<<<<<< HEAD
     const rawText = await callGroqChat(
       [{ role: "user", content: prompt }],
       { temperature: 0.3, maxTokens: 512 },
@@ -254,38 +241,6 @@ export async function getAiExplanations(
     }
 
     const explanations: GroqExplanation[] = parseJsonArrayFromAiText(rawText);
-=======
-
-    const response = await fetch(GROQ_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-        temperature: 0.3,
-        max_tokens: 512,
-      }),
-      signal: AbortSignal.timeout(8000), // 8 sn zaman aşımı
-    });
-
-    if (!response.ok) {
-      throw new Error(`Groq API HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    const rawText: string = data?.choices?.[0]?.message?.content ?? "";
-
-    // JSON parse — başarısız olursa fallback
-    const explanations: GroqExplanation[] = JSON.parse(rawText);
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
 
     // Her adaya açıklamasını eşleştir
     return candidates.map((candidate) => {

@@ -8,12 +8,9 @@ type PersistApi = {
 };
 
 export function useStoreHydration(persistApi: PersistApi) {
-  const [hydrated, setHydrated] = React.useState(
-    persistApi?.hasHydrated?.() ?? false
-  );
+  const [hydrated, setHydrated] = React.useState(persistApi.hasHydrated);
 
   React.useEffect(() => {
-    if (!persistApi) return;
     const unsub = persistApi.onFinishHydration(() => setHydrated(true));
     setHydrated(persistApi.hasHydrated());
     return unsub;

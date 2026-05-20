@@ -5,7 +5,14 @@ export type ThemeMode = "system" | "light" | "dark";
 export type FontSize = "sm" | "md" | "lg";
 export type RoleName = "Admin" | "Manager" | "Employee";
 
+export const DEFAULT_USERNAME = "admin";
+export const DEFAULT_PASSWORD = "admin1234";
+
 export type SettingsState = {
+  // Credentials (login)
+  username: string;
+  password: string;
+
   // User settings
   profileName: string;
   profileEmail: string;
@@ -32,8 +39,11 @@ export type SettingsState = {
   lastLoginAt: string; // ISO
 
   // Actions
+  setUsername: (username: string) => void;
+  setPassword: (password: string) => void;
   setProfile: (patch: Partial<Pick<SettingsState, "profileName" | "profileEmail" | "profileImageDataUrl">>) => void;
   setNotify: (patch: Partial<Pick<SettingsState, "notifyEmail" | "notifyToast">>) => void;
+  recordLogin: () => void;
   setAppearance: (patch: Partial<Pick<SettingsState, "theme" | "fontSize" | "sidebarCollapsed">>) => void;
   setEnabledRoles: (roles: RoleName[]) => void;
   setCardVisibility: (key: keyof SettingsState["cardsVisibility"], value: boolean) => void;
@@ -44,6 +54,9 @@ export type SettingsState = {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
+  username: DEFAULT_USERNAME,
+  password: DEFAULT_PASSWORD,
+
   profileName: "Admin User",
   profileEmail: "admin@company.com",
   profileImageDataUrl: null,
@@ -65,11 +78,14 @@ export const useSettingsStore = create<SettingsState>()(
   twoFactorEnabled: false,
   lastLoginAt: new Date().toISOString(),
 
+  setUsername: (username) => set(() => ({ username: username.trim() })),
+  setPassword: (password) => set(() => ({ password })),
   setProfile: (patch) =>
     set((state) => ({
       ...state,
       ...patch,
     })),
+  recordLogin: () => set(() => ({ lastLoginAt: new Date().toISOString() })),
   setNotify: (patch) =>
     set((state) => ({
       ...state,
@@ -88,7 +104,18 @@ export const useSettingsStore = create<SettingsState>()(
     }),
     {
       name: "employee-dashboard-settings",
-      version: 1,
+      version: 2,
+      migrate: (persisted, version) => {
+        const state = persisted as Partial<SettingsState>;
+        if (version < 2) {
+          return {
+            ...state,
+            username: state.username ?? DEFAULT_USERNAME,
+            password: state.password ?? DEFAULT_PASSWORD,
+          };
+        }
+        return state as SettingsState;
+      },
     },
   ),
 );

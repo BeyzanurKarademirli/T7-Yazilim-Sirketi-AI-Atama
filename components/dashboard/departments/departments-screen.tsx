@@ -85,11 +85,7 @@ export function DepartmentsScreen() {
     <div className="space-y-6">
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight">{t("departments")}</h2>
-<<<<<<< HEAD
         <p className="text-sm text-[var(--muted-foreground)]">
-=======
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
           {t("departmentsDescription")}
         </p>
       </div>
@@ -116,11 +112,7 @@ export function DepartmentsScreen() {
         </CardContent>
       </Card>
 
-<<<<<<< HEAD
       <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-=======
-      <div className="rounded-lg border border-zinc-200 bg-white dark:border-gray-700 dark:bg-gray-800">
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
         <Table>
           <TableHeader>
             <TableRow>
@@ -132,11 +124,7 @@ export function DepartmentsScreen() {
           <TableBody>
             {departments.length === 0 ? (
               <TableRow>
-<<<<<<< HEAD
                 <TableCell colSpan={3} className="py-10 text-center text-[var(--muted-foreground)]">
-=======
-                <TableCell colSpan={3} className="py-10 text-center text-zinc-500 dark:text-zinc-400">
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                   {t("noDepartments")}
                 </TableCell>
               </TableRow>
@@ -156,11 +144,7 @@ export function DepartmentsScreen() {
                       aria-label={t("deleteDepartment")}
                       onClick={() => onDelete(d)}
                     >
-<<<<<<< HEAD
                       <Trash2 className="text-[var(--danger)]" />
-=======
-                      <Trash2 className="text-red-600 dark:text-red-500" />
->>>>>>> a2ebc7a252b7ad714759a736da8116988d61fab8
                     </Button>
                   </TableCell>
                 </TableRow>
