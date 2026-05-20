@@ -1,0 +1,23 @@
+{
+  "nav.dashboard": "Panel",
+  "nav.employees": "Çalışanlar",
+  "nav.departments": "Departmanlar",
+  "nav.settings": "Ayarlar",
+
+  "brand.title": "Personel Yönetimi",
+  "brand.subtitle": "Yönetim Paneli",
+
+  "topnav.subtitle": "Personel Yönetim Paneli",
+  "topnav.searchEmployees": "Çalışan ara...",
+  "topnav.openMenu": "Menüyü aç",
+  "topnav.notifications": "Bildirimler",
+  "topnav.newEmployee": "Yeni Çalışan",
+
+  "dashboard.overview": "Kurumunuzun genel görünümü.",
+
+  "cards.totalEmployees": "Çalışan Sayısı",
+  "cards.totalSalary": "Toplam Maaş",
+  "cards.departments": "Departmanlar",
+  "cards.averageSalary": "Ortalama Maaş"
+}
+

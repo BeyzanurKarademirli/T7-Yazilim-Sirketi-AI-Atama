@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --background: #edf2f8;
+  --foreground: #1f3556;
+  --surface: #f7f9fc;
+  --surface-muted: #eef3f9;
+  --border: #e8ecf4;
+  --muted-foreground: #5a6a85;
+  --primary: #2f4f7f;
+  --primary-soft: #3f6397;
+  --sidebar-start: #2f4f7f;
+  --sidebar-end: #3f6397;
+  --navy: #2f4f7f;
+  --navy-soft: #3f6397;
+  --focus: #4a9eff;
+  --danger: #ff4e4e;
+  --teal: #00c9a7;
+  --teal-soft: #00a88a;
+  --blue: #4a9eff;
+  --amber: #ffb347;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+.dark {
+  --background: #1e2d42;
+  --foreground: #dfe8f6;
+  --surface: #2a3d5a;
+  --surface-muted: #243650;
+  --border: #415a7d;
+  --muted-foreground: #bcc9dd;
+  --primary: #4b73ac;
+  --primary-soft: #5b84bf;
+  --sidebar-start: #365a89;
+  --sidebar-end: #456b9d;
+  --navy: #365a89;
+  --navy-soft: #456b9d;
+  --focus: #9eb5dd;
+  --danger: #d87a7a;
+  --teal: #00c9a7;
+  --teal-soft: #00a88a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Dark modda sabit gri (#5a6a85) metinleri okunur seviyeye çıkar */
+.dark .text-\[\#5a6a85\] {
+  color: #bcc9dd !important;
+}
